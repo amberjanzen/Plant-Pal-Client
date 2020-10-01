@@ -1,4 +1,5 @@
   import React, {Component} from "react";
+  import Auth from "../../Auth/Auth"
 //   import PlantIndex from "../Plants/PlantIndex";
 
 class Home extends Component {
@@ -8,7 +9,7 @@ class Home extends Component {
             <div className="main">
             <div className="mainDiv">
                 <h3>home</h3>
-             
+                <Auth />
                 </div>
             </div>
         )
