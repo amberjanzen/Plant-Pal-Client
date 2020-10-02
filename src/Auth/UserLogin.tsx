@@ -1,9 +1,60 @@
 import React from "react";
 import '../StyleCSS/auth.css'
 
-export class UserLogin extends React.Component {
-    handleChange = (event : any) => {}
-  handleSubmit = (event : any) => {}
+//login as admin option??
+
+interface LoginState {
+   email : string,
+   password : string,
+   token: boolean,
+}
+
+interface UserLoginProps {
+      name?: any;
+      value?: any;
+      updateToken: (token:string) => void
+
+}
+
+export class UserLogin extends React.Component<UserLoginProps, LoginState> {
+                   constructor(props: UserLoginProps) {
+                    super(props);
+                    const initialState = {
+                        email : '',
+                        password : '',
+                        token: true,
+                    }
+                    this.state = initialState;
+                }
+
+  handleSubmit = (event : any) => {
+   event.preventDefault();
+   fetch(`http://localhost:4000/user/login`, {
+       method: "POST",
+       body: JSON.stringify({
+           email: this.state.email,
+           password: this.state.password,
+           admin: true,
+       }),
+       headers: new Headers({
+         "Content-Type": "application/json",
+       }),
+     })
+     .then((res) => {
+       if (res.status !== 200) {
+         res.json().then(err=> {alert(err.error)})
+         throw new Error("fetch error");
+       } else return res.json();
+     })
+     .then((data) => {
+         this.setState({
+            token: data.sessionToken
+         });
+         this.props.updateToken(data.sessionToken);
+         console.log(data.sessionToken);
+     })
+     .catch((err) => console.log(err));
+  }
 
     // type userLogin = {
     //     login: {
@@ -18,18 +69,20 @@ export class UserLogin extends React.Component {
                <form onSubmit={this.handleSubmit} noValidate >
                   <div className='email'>
                      <label htmlFor="email">Email</label>
-                     <input type='email' name='email' onChange={this.handleChange}/>
+                     <input type='email' name='email'/>
                   </div>
                   <div className='password'>
                      <label htmlFor="password">Password</label>
-                     <input type='password' name='password' onChange={this.handleChange}/>
+                     <input type='password' name='password'/>
                   </div>
                   <div className='admin'>
                      <label htmlFor="admin">Login as Admin</label>
-                     <input type='checkbox' name='Admin' onChange={this.handleChange}/>
+                     <input type='checkbox' name='Admin'/>
                   </div>
                   <div className='submit'>
                      <button>Login</button>
+                     <small>Not Registered? Click here to Signup</small>
+
                   </div>
              </form>
          </div>
