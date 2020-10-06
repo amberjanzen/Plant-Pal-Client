@@ -10,7 +10,7 @@ class PlantTable extends Component {
     render(){
         return(
             <div>
-                <h3>PlantTable</h3>
+                <h3>locationTable</h3>
                 <hr />
                 <LocationEdit />
                 <hr />
@@ -21,3 +21,4 @@ class PlantTable extends Component {
     }
 }
 export default PlantTable
+

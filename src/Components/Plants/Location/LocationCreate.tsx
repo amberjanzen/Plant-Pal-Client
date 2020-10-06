@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { EnumType } from "typescript";
 
 
 

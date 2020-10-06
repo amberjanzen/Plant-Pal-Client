@@ -8,9 +8,7 @@ import '../StyleCSS/auth.css';
 const Regex = RegExp(/^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i);
 
 interface UserCreateProps {
-    name?: any;
-    value?: any;
-    updateToken: (token:string) => void
+    updateToken: (token:string, authToken:boolean) => void
  }
  interface UserCreateState {
     firstName : string,
@@ -91,7 +89,6 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                           this.setState({
                               token: data.sessionToken
                           });
-                        this.props.updateToken(data.sessionToken);
                         console.log(data.sessionToken);
                       })
                       .catch((err) => console.log(err));

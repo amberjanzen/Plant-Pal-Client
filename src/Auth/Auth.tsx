@@ -2,22 +2,32 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import  { UserLogin }   from "./UserLogin";
 import { UserCreate } from "./UserCreate";
+// import { Link, Route, Switch} from "react-router-dom";
+
+//create router to toggle between login and logout
 
 
 //toggle between user login and create
 //create toggle?
 type AcceptedProps = {
-    updateToken: (arg0:string) => void
+    updateToken: (token:string, authenticated: boolean) => void
     
 }
-type AuthData = {
 
-}
 
-class Auth extends React.Component<AcceptedProps, AuthData> {
-    constructor(props: AcceptedProps){
-        super(props)
-    }
+class Auth extends React.Component<AcceptedProps> {
+    // constructor(props: AcceptedProps){
+    //     super(props);
+    //     this.toggle =this.toggle.bind(this);
+    //     this.state ={
+    //         isOpen: true,
+    //     }
+    // }
+    // toggle() {
+    //     this.setState({
+    //         isOpen: !this.state.isOpen
+    //     });
+    // }
     
         // constructor(props) {
         //     super(props);
@@ -33,12 +43,10 @@ class Auth extends React.Component<AcceptedProps, AuthData> {
         return (
             <div className="main">
                 <div className= "mainDiv">
-                     {/* <div className= "loginLogout" onClick={this.UserLoginForm.bind(this)}>
-                         SignUp
-                    </div>
-                    <div className ="loginLogout" onClick={this.UserCreateForm.bind(this)}>
-                        login
-                    </div> */}
+                  <div className="container">
+                     {/* {<UserLogin updateToken={this.props.updateToken}/>} */}
+                  </div>
+
                <UserCreate updateToken={this.props.updateToken}/>
                <UserLogin updateToken={this.props.updateToken}/>
                 </div>

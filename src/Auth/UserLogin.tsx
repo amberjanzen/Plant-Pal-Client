@@ -10,9 +10,7 @@ interface LoginState {
 }
 
 interface UserLoginProps {
-      name?: any;
-      value?: any;
-      updateToken: (token:string) => void
+      updateToken: (token:string, authToken: boolean) => void
 
 }
 
@@ -49,8 +47,7 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
      .then((data) => {
          this.setState({
             token: data.sessionToken
-         });
-         this.props.updateToken(data.sessionToken);
+         })
          console.log(data.sessionToken);
      })
      .catch((err) => console.log(err));
