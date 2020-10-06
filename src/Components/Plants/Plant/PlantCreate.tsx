@@ -74,7 +74,7 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
   render() {
 
     return (
-        <div className="wrapper">
+        <div className="createTable">
         <h1> Add New Plant</h1>
         <FormControl>
           <TextField

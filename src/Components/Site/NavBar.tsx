@@ -17,7 +17,7 @@ type NavProps = {
 
 class NavBar extends Component <NavProps, navState>  {
     constructor(props: NavProps) {
-        super(props)
+        super(props);
     }
 
     render() {

@@ -18,9 +18,9 @@ class PlantTable extends Component<PlantIndexProps> {
         return(
             <div>
                 <h3>PlantTable</h3>
-                <hr />
-                <PlantEdit />
-                <hr />
+
+                {/* <PlantEdit /> */}
+
                 <PlantCreate sessionData={this.props} />
             </div>
         )
