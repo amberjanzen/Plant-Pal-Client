@@ -102,6 +102,7 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
         return(
             <div>
                <h2>Sign Up</h2>
+               <br />
                <form onSubmit={this.handleSubmit} >
                   <div className='firstName'>
                      <label htmlFor="firstName">First Name</label>
@@ -123,10 +124,6 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                      <input type='password' name='password' onChange={this.handleChange}/>
                      {errors.password.length > 0 &&  <span style={{color: "red"}}>{errors.password}</span>}
                   </div>
-                  <div className='admin'>
-                     <label htmlFor="admin">Login as Admin</label>
-                     <input type='checkbox' name='Admin' onChange={this.handleChange}/>
-                  </div>
                   <div className='submit'>
                      <button>Sign up</button>
                   </div>
@@ -136,3 +133,4 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
 
     }
 }
+

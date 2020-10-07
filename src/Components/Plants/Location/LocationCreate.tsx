@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
 
 
-//need to add enum in
-// connect to model
-//session token not working?
+// sunExposure: {
+//   type: DataTypes.ENUM('full sun', 'partial sunshade', 'full shade'),
+//   allowNull: true,
+// }
 
+//location fetch works
+//create location- then create plant (map over)
 
 interface createLocation {
     locationName: string,
@@ -13,7 +16,7 @@ interface createLocation {
     sunExposure: string,
 }
 type NewLocationProps = {
-    sessionData: { sessionData: {authenticated: boolean, token: string|null} }
+    sessionData: { authenticated: boolean,  token: string|null} 
 }
 class LocationCreate extends Component<NewLocationProps, createLocation> {
   constructor(props: NewLocationProps) {
@@ -22,20 +25,31 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
         locationName: '',
         locationDescription: '',
         sunExposure: '',
-    }
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
-  token:string|null = this.props.sessionData.sessionData.token
-  requestHeaders: any = { "Content-Type": "application/json", 'Authorization': this.token };
+  componentDidUpdate(){console.log(this.state)}
 
+  handleChange = (e: any) => {
+    e.preventDefault();
+    const { name, value} = e.target;
+    this.setState(Object.assign(this.state, { [name]: value }));
+  };
+
+  // token:string|null = this.props.sessionData.token
+  headers: any = { "Content-Type": "application/json", 'Authorization': this.props.sessionData.token };
+  
   handleSubmit = (e: React.FormEvent<HTMLElement>) =>{
       e.preventDefault();
       fetch(`http://localhost:4000/location/create`, {
       method: "POST",
-      headers: this.requestHeaders,
+      headers: this.headers,
       body: JSON.stringify({
+        location: {
         locationName: this.state.locationName,
         locationDescription: this.state.locationDescription,
         sunExposure: this.state.sunExposure,
+        },
       }),
       }).then(res => res.json())
       .then((data) => {

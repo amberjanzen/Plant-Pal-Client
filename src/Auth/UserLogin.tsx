@@ -64,6 +64,7 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
         return(
             <div>
                <h2>Login</h2>
+               <br />
                <form onSubmit={this.handleSubmit} noValidate >
                   <div className='email'>
                      <label htmlFor="email">Email</label>
@@ -71,11 +72,7 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
                   </div>
                   <div className='password'>
                      <label htmlFor="password">Password</label>
-                     <input type='text' name='password'/>
-                  </div>
-                  <div className='admin'>
-                     <label htmlFor="admin">Login as Admin</label>
-                     <input type='checkbox' name='Admin'/>
+                     <input type='password' name='password'/>
                   </div>
                   <div className='submit'>
                      <button>Login</button>

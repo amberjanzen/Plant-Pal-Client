@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
 
+
+//sequelize database error "22P02"
+
+
 // sunRequirement: {
 //   type: DataTypes.ENUM("Full Sun", "Partial Sun/Shade", "Full Shade"),
 //   allowNull: false,
@@ -14,47 +18,46 @@ import { FormControl, TextField, Button } from "@material-ui/core";
 //session token not working?
 
 interface createPlant {
-  plant: {
     plantName: string;
     plantType: string;
     sunRequirement: string;
     waterNeeds: string;
     plantCare: string;
-  };
 }
 type NewPlantProps = {
   sessionData: { authenticated: boolean, token: string | null };
 };
 class PlantCreate extends Component<NewPlantProps, createPlant> {
-  handleChange = (e: any) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    this.setState(Object.assign(this.state, { [name]: value }));
-  };
   constructor(props: NewPlantProps) {
     super(props);
-    const initialState = {
-      plant: {
+     this.state = {
         plantName: "",
         plantType: "",
         sunRequirement: "",
         waterNeeds: "",
         plantCare: "",
-      },
     };
-    this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
   }
+  componentDidUpdate(){console.log(this.state)}
+
+  handleChange = (e: any) => {
+    e.preventDefault();
+    const { name, value} = e.target;
+    this.setState(Object.assign(this.state, { [name]: value }));
+  };
+
   // token:string|null = this.props.SessionData.SessionData.token
-  requestHeaders: any = {
+    headers: any = {
     "Content-Type": "application/json",
     'Authorization': this.props.sessionData.token,
   };
+  
 
   fetchPlants = () => {
     fetch(`http://localhost:4000/plant/all`, {
       method: "GET",
-      headers: this.requestHeaders,
+      headers: this.headers,
     })
       .then((res) => res.json())
       .then((plant) => {
@@ -65,20 +68,20 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
   // useEffect(() => {
   //   fetchMedia(localStorage.getItem("token"));
   // }, []);
-
+  
 
   handleSubmit = (e: any) => {
     e.preventDefault();
     fetch(`http://localhost:4000/plant/create`, {
       method: "POST",
-      headers: this.requestHeaders,
+      headers: this.headers,
       body: JSON.stringify({
         plant: {
-          plantName: this.state.plant.plantName,
-          plantType: this.state.plant.plantType,
-          sunRequirement: this.state.plant.sunRequirement,
-          waterNeeds: this.state.plant.waterNeeds,
-          plantCare: this.state.plant.plantCare,
+          plantName: this.state.plantName,
+          plantType: this.state.plantType,
+          sunRequirement: this.state.sunRequirement,
+          waterNeeds: this.state.waterNeeds,
+          plantCare: this.state.plantCare,
         },
       }),
     })
@@ -116,15 +119,15 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
             <div className="plantName">
               <label htmlFor="plantName">Name</label>
               <input
-                type="plantName"
+                type="string"
                 name="plantName"
                 onChange={this.handleChange}
               />
             </div>
-            <div className="plantType">
+            <div className="text">
               <label htmlFor="plantType">Type</label>
               <input
-                type="plantType"
+                type="string"
                 name="plantType"
                 onChange={this.handleChange}
               />
@@ -132,7 +135,7 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
             <div className="sunRequirement">
               <label htmlFor="sunRequirement">sun</label>
               <input
-                type="sunRequirement"
+                type="string"
                 name="sunRequirement"
                 onChange={this.handleChange}
               />
@@ -140,7 +143,7 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
             <div className="waterNeeds">
               <label htmlFor="waterNeeds">water</label>
               <input
-                type="waterNeeds"
+                type="string"
                 name="waterNeeds"
                 onChange={this.handleChange}
               />
@@ -148,7 +151,7 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
             <div className="plantCare">
               <label htmlFor="plantCare">care</label>
               <input
-                type="plantCare"
+                type="string"
                 name="plantCare"
                 onChange={this.handleChange}
               />

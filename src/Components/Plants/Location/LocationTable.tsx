@@ -2,6 +2,7 @@
 import React, {Component} from "react";
 // import LocationEdit from "./LocationEdit"
 import LocationCreate from "./LocationCreate"
+import Locations from "./Locations"
 
 type LocationIndexProps = {
     sessionData: {authenticated: boolean, token: string|null}
@@ -18,7 +19,8 @@ class PlantTable extends Component <LocationIndexProps> {
             <div>
                 <h3>locationTable</h3>
                 {/* <LocationEdit /> */}
-                <LocationCreate sessionData={this.props}/>
+                <Locations sessionData={this.props.sessionData} />
+                <LocationCreate sessionData={this.props.sessionData}/>
 
             </div>
         )

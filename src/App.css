@@ -5,9 +5,7 @@
   background-color: white;
 }
 body {
-  padding: 15px;
   background-color:white;
-  font: Belleza;
 }
 
 .main {
@@ -28,20 +26,6 @@ ul {
   padding: 5px;
 }
 
-nav {
-  margin-top: 0.5em!important;
-  text-align: center;
-  background-color: #53565A;
-  color: white;
-}
-
-nav a {
-  color: white;
-}
-
-nav  p {
-  margin-top: 0.8em!important;
-}
 .footer {
     background-color: #F8F8F8;
     border-top: 1px solid #E7E7E7;
