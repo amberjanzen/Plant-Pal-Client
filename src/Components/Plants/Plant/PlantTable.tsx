@@ -21,7 +21,7 @@ class PlantTable extends Component<PlantIndexProps> {
 
                 {/* <PlantEdit /> */}
 
-                <PlantCreate sessionData={this.props} />
+                <PlantCreate sessionData={this.props.sessionData} />
             </div>
         )
     }

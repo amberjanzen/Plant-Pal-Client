@@ -8,7 +8,7 @@ import '../StyleCSS/auth.css';
 const Regex = RegExp(/^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i);
 
 interface UserCreateProps {
-    updateToken: (token:string, authToken:boolean) => void
+    updateToken: (token:string, authenticated: boolean) => void
  }
  interface UserCreateState {
     firstName : string,
@@ -79,45 +79,38 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                           "Content-Type": "application/json",
                         }),
                       })
-                      .then((res) => {
-                        if (res.status !== 200) {
-                          res.json().then(err=> {alert(err.error)})
-                          throw new Error("fetch error");
-                        } else return res.json();
-                      })
+                      .then((res) => res.json())
+
                       .then((data) => {
-                          this.setState({
-                              token: data.sessionToken
-                          });
-                        console.log(data.sessionToken);
+                        window.localStorage.setItem('token', data.sessionToken)
+
                       })
                       .catch((err) => console.log(err));
-                    // let validity = true;
-                    // Object.values(this.state.errors).forEach(
-                    //   (val) => val.length > 0 && (validity = false)
-                    // );
-                    // if(validity == true){
-                    //    console.log("Registration successful!");
-                    // }else{
-                    //    console.log("Registration failed")
-                    // }
+                    let validity = true;
+                    Object.values(this.state.errors).forEach(
+                      (val) => val.length > 0 && (validity = false)
+                    );
+                    if(validity == true){
+                       console.log("Registration successful!");
+                    }else{
+                       console.log("Registration failed")
+                    }
                 }
 
     render(){
         const {errors} = this.state
         return(
-            <div className='wrapper'>
-            <div className='form-wrapper'>
+            <div>
                <h2>Sign Up</h2>
-               <form onSubmit={this.handleSubmit} noValidate >
-                  <div className='firstname'>
-                     <label htmlFor="firstname">First Name</label>
-                     <input type='text' name='firstname' onChange={this.handleChange}/>
+               <form onSubmit={this.handleSubmit} >
+                  <div className='firstName'>
+                     <label htmlFor="firstName">First Name</label>
+                     <input type='firstName' name='firstName' onChange={this.handleChange}/>
     
                   </div>
-                  <div className='lastname'>
-                     <label htmlFor="lastname">Last Name</label>
-                     <input type='text' name='lastname' onChange={this.handleChange}/>
+                  <div className='lastName'>
+                     <label htmlFor="lastName">Last Name</label>
+                     <input type='lastName' name='lastName' onChange={this.handleChange}/>
  
                   </div>
                   <div className='email'>
@@ -136,11 +129,9 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                   </div>
                   <div className='submit'>
                      <button>Sign up</button>
-                     <small>Already Have an Account? Click to Login here</small>
                   </div>
              </form>
          </div>
-      </div>
         )
 
     }

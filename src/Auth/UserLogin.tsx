@@ -2,6 +2,7 @@ import React from "react";
 import '../StyleCSS/auth.css'
 
 //login as admin option??
+//logs in without textinput?
 
 interface LoginState {
    email : string,
@@ -10,7 +11,7 @@ interface LoginState {
 }
 
 interface UserLoginProps {
-      updateToken: (token:string, authToken: boolean) => void
+     updateToken: (token:string, authenticated: boolean) => void
 
 }
 
@@ -23,6 +24,7 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
                         token: true,
                     }
                     this.state = initialState;
+
                 }
 
   handleSubmit = (event : any) => {
@@ -60,17 +62,16 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
     //     },
     render(){
         return(
-            <div className='wrapper'>
-            <div className='form-wrapper'>
+            <div>
                <h2>Login</h2>
                <form onSubmit={this.handleSubmit} noValidate >
                   <div className='email'>
                      <label htmlFor="email">Email</label>
-                     <input type='email' name='email'/>
+                     <input type='text' name='email'/>
                   </div>
                   <div className='password'>
                      <label htmlFor="password">Password</label>
-                     <input type='password' name='password'/>
+                     <input type='text' name='password'/>
                   </div>
                   <div className='admin'>
                      <label htmlFor="admin">Login as Admin</label>
@@ -78,12 +79,11 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
                   </div>
                   <div className='submit'>
                      <button>Login</button>
-                     <small>Not Registered? Click here to Signup</small>
 
                   </div>
              </form>
          </div>
-      </div>
+
         )
 
     }

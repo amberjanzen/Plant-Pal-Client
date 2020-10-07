@@ -75,8 +75,8 @@ p, div {
     color: #fefefe;
   }
    
-  .firstname,
-  .lastname,
+  .firstName,
+  .lastName,
   .email,
   .password {
     display: flex;

@@ -1,3 +1,4 @@
+
 import React, {Component} from "react";
 // import LocationEdit from "./LocationEdit"
 import LocationCreate from "./LocationCreate"
@@ -24,4 +25,5 @@ class PlantTable extends Component <LocationIndexProps> {
     }
 }
 export default PlantTable
+
 
