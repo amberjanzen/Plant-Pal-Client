@@ -11,7 +11,7 @@ interface LoginState {
 }
 
 interface UserLoginProps {
-     updateToken: (token:string, authenticated: boolean) => void
+      updateToken: (token:string, authorization: boolean) => void
 
 }
 
@@ -24,7 +24,6 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
                         token: true,
                     }
                     this.state = initialState;
-
                 }
 
   handleSubmit = (event : any) => {
@@ -64,7 +63,6 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
         return(
             <div>
                <h2>Login</h2>
-               <br />
                <form onSubmit={this.handleSubmit} noValidate >
                   <div className='email'>
                      <label htmlFor="email">Email</label>
@@ -72,7 +70,7 @@ export class UserLogin extends React.Component<UserLoginProps, LoginState> {
                   </div>
                   <div className='password'>
                      <label htmlFor="password">Password</label>
-                     <input type='password' name='password'/>
+                     <input type='text' name='password'/>
                   </div>
                   <div className='submit'>
                      <button>Login</button>
