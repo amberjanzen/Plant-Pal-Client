@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
+import PlantInventory from "../Plant/PlantInventory";
+import { Grid, withStyles } from '@material-ui/core';
+
 
 
 // sunExposure: {
@@ -17,8 +20,6 @@ interface createLocation {
 }
 type NewLocationProps = {
   sessionData: { authenticated: boolean, token: string | null };
-  // refresh: (newState:boolean) => void,
-  // refreshState: boolean
 }
 class LocationCreate extends Component<NewLocationProps, createLocation> {
   constructor(props: NewLocationProps) {

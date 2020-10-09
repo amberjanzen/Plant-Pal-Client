@@ -20,8 +20,8 @@ class PlantTable extends Component<PlantIndexProps> {
                 <h3>PlantTable</h3>
                 
 
-                <PlantInventory sessionData={this.props.sessionData}/>
-
+                {/* <PlantInventory ={this.props}/> */}
+                {/* <PlantInventory sessionData={this.props.sessionData}/> */}
                 {/* <PlantCreate sessionData={this.props.sessionData} /> */}
             </div>
         )
