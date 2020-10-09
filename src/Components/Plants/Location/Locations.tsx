@@ -17,7 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 type getLocationProps = {
-    sessionData: {authenticated: boolean, token: string|null}
+  sessionData: { authenticated: boolean, token: string | null },
 }
 export interface locationState {
     location: results[]
@@ -68,7 +68,7 @@ state = {
             })
               .catch(error => console.log(error))
           }
-          
+
 
 // componentDidMount() {
 // this.fetchLocations()

@@ -16,7 +16,9 @@ interface createLocation {
     sunExposure: string,
 }
 type NewLocationProps = {
-    sessionData: { authenticated: boolean,  token: string|null} 
+  sessionData: { authenticated: boolean, token: string | null };
+  // refresh: (newState:boolean) => void,
+  // refreshState: boolean
 }
 class LocationCreate extends Component<NewLocationProps, createLocation> {
   constructor(props: NewLocationProps) {
@@ -37,7 +39,7 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
   };
 
   // token:string|null = this.props.sessionData.token
-  headers: any = { "Content-Type": "application/json", 'Authorization': this.props.sessionData.token };
+  headers: any = { "Content-Type": "application/json",  'Authorization': this.props.sessionData.token  };
   
   handleSubmit = (e: React.FormEvent<HTMLElement>) =>{
       e.preventDefault();

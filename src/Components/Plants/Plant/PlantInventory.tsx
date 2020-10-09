@@ -5,7 +5,7 @@ import React, { Component } from "react";
 // connect to location table
 
 type getPlantProps = {
-    sessionData:{token: string | null }
+  sessionData: { authenticated: boolean; token: string | null },
 }
 
 export interface plantState {

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
 
-
 //sequelize database error "22P02"
-
 
 // sunRequirement: {
 //   type: DataTypes.ENUM("Full Sun", "Partial Sun/Shade", "Full Shade"),
@@ -18,41 +16,42 @@ import { FormControl, TextField, Button } from "@material-ui/core";
 //session token not working?
 
 interface createPlant {
-    plantName: string;
-    plantType: string;
-    sunRequirement: string;
-    waterNeeds: string;
-    plantCare: string;
+  plantName: string;
+  plantType: string;
+  sunRequirement: string;
+  waterNeeds: string;
+  plantCare: string;
 }
 type NewPlantProps = {
-  sessionData: { authenticated: boolean, token: string | null };
+  sessionData: { authenticated: boolean; token: string | null };
 };
 class PlantCreate extends Component<NewPlantProps, createPlant> {
   constructor(props: NewPlantProps) {
     super(props);
-     this.state = {
-        plantName: "",
-        plantType: "",
-        sunRequirement: "",
-        waterNeeds: "",
-        plantCare: "",
+    this.state = {
+      plantName: "",
+      plantType: "",
+      sunRequirement: "",
+      waterNeeds: "",
+      plantCare: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  componentDidUpdate(){console.log(this.state)}
+  componentDidUpdate() {
+    console.log(this.state);
+  }
 
   handleChange = (e: any) => {
     e.preventDefault();
-    const { name, value} = e.target;
+    const { name, value } = e.target;
     this.setState(Object.assign(this.state, { [name]: value }));
   };
 
   // token:string|null = this.props.SessionData.SessionData.token
-    headers: any = {
+  headers: any = {
     "Content-Type": "application/json",
-    'Authorization': this.props.sessionData.token,
+    Authorization: this.props.sessionData.token,
   };
-  
 
   fetchPlants = () => {
     fetch(`http://localhost:4000/plant/all`, {
@@ -68,7 +67,6 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
   // useEffect(() => {
   //   fetchMedia(localStorage.getItem("token"));
   // }, []);
-  
 
   handleSubmit = (e: any) => {
     e.preventDefault();
@@ -87,7 +85,7 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
     })
       .then((res) => res.json())
       .then((sessionData) => {
-          console.log(sessionData)
+        console.log(sessionData);
       })
       .catch((err) => console.log(err));
   };

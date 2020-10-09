@@ -1,88 +1,84 @@
-import React from "react";
-import '../StyleCSS/auth.css'
-
-//login as admin option??
-//logs in without textinput?
+import React, { Component } from "react";
+import "../StyleCSS/auth.css";
+import { Button, TextField } from "@material-ui/core";
+import { Form, Formik } from "formik";
 
 interface LoginState {
-   email : string,
-   password : string,
-   token: boolean,
+  email: string;
+  password: string;
 }
-
-interface UserLoginProps {
-      updateToken: (token:string, authorization: boolean) => void
-
-}
-
-export class UserLogin extends React.Component<UserLoginProps, LoginState> {
-                   constructor(props: UserLoginProps) {
-                    super(props);
-                    const initialState = {
-                        email : '',
-                        password : '',
-                        token: true,
-                    }
-                    this.state = initialState;
-                }
-
-  handleSubmit = (event : any) => {
-   event.preventDefault();
-   fetch(`http://localhost:4000/user/login`, {
-       method: "POST",
-       body: JSON.stringify({
-           email: this.state.email,
-           password: this.state.password,
-           admin: true,
-       }),
-       headers: new Headers({
-         "Content-Type": "application/json",
-       }),
-     })
-     .then((res) => {
-       if (res.status !== 200) {
-         res.json().then(err=> {alert(err.error)})
-         throw new Error("fetch error");
-       } else return res.json();
-     })
-     .then((data) => {
-         this.setState({
-            token: data.sessionToken
-         })
-         console.log(data.sessionToken);
-     })
-     .catch((err) => console.log(err));
+type LoginFormProps = {
+  updateToken: (token: string, authenticated: boolean) => void;
+};
+type submitState = {
+  loggedIn: boolean;
+};
+export class UserLogin extends Component<LoginFormProps, submitState> {
+  state = {
+    loggedIn: false,
+  };
+  LoginSubmit(values: LoginState, loginProps: LoginFormProps) {
+    fetch(`http://localhost:4000/user/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (!data.error) {
+          window.localStorage.setItem("token", data.sessionToken);
+          loginProps.updateToken(data.sessionToken, true);
+          this.setState({ loggedIn: true });
+        } else {
+          alert(`error`);
+        }
+      })
+      .catch((err) => console.log(err));
   }
-
-    // type userLogin = {
-    //     login: {
-    //         email: string,
-    //         password: string,
-    //     },
-    render(){
-        return(
-            <div>
-               <h2>Login</h2>
-               <form onSubmit={this.handleSubmit} noValidate >
-                  <div className='email'>
-                     <label htmlFor="email">Email</label>
-                     <input type='text' name='email'/>
-                  </div>
-                  <div className='password'>
-                     <label htmlFor="password">Password</label>
-                     <input type='text' name='password'/>
-                  </div>
-                  <div className='submit'>
-                     <button>Login</button>
-
-                  </div>
-             </form>
-         </div>
-
-        )
-
-    }
+  render() {
+    return (
+      <div>
+        <h1>Login</h1>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          onSubmit={(values) => {
+            this.LoginSubmit(values, this.props);
+          }}
+        >
+          {({ values, handleChange }) => (
+            <Form>
+              <div>
+                <TextField
+                  name="email"
+                  label="E-mail"
+                  type="email"
+                  value={values.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="password"
+                  label="Password"
+                  type="password"
+                  value={values.password}
+                  onChange={handleChange}
+                />
+              </div>
+              <Button type="submit">Login</Button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    );
+  }
 }
-
-
-

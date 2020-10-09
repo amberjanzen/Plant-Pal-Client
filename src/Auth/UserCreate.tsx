@@ -1,5 +1,6 @@
 import React from "react";
 import '../StyleCSS/auth.css';
+import { Redirect } from "react-router-dom";
 
 
 //first and last name do not show up in pg admin
@@ -8,15 +9,14 @@ import '../StyleCSS/auth.css';
 const Regex = RegExp(/^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i);
 
 interface UserCreateProps {
-    updateToken: (token:string, authenticated: boolean) => void
+    sessionData: { authenticated: boolean; token: string | null };
+    updateToken: (token: string, authenticated: boolean) => void
  }
  interface UserCreateState {
     firstName : string,
     lastName: string,
     email : string,
     password : string,
-    admin: boolean,
-    token: string,
     errors : {
        firstName : string,
        lastName : string
@@ -24,6 +24,11 @@ interface UserCreateProps {
        password : string
     }
 }
+
+type stateValues ={
+    submitted: boolean
+}
+
 
 export class UserCreate extends React.Component<UserCreateProps, UserCreateState> {
 
@@ -51,8 +56,6 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                         lastName: '',
                         email : '',
                         password : '',
-                        admin: true,
-                        token: '',
                         errors: {
                             firstName: '',
                             lastName: '',
@@ -62,6 +65,8 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                     }
                     this.state = initialState;
                     this.handleChange =this.handleChange.bind(this)
+                    
+
                 }
                 handleSubmit = (event : any) => {
                     event.preventDefault();
@@ -72,7 +77,7 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                             lastName: this.state.lastName,
                             email: this.state.email,
                             password: this.state.password,
-                            admin: true,
+
                         
                         }),
                         headers: new Headers({
@@ -102,7 +107,6 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
         return(
             <div>
                <h2>Sign Up</h2>
-               <br />
                <form onSubmit={this.handleSubmit} >
                   <div className='firstName'>
                      <label htmlFor="firstName">First Name</label>

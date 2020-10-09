@@ -1,4 +1,3 @@
-  
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { UserLogin } from "./UserLogin";
@@ -6,8 +5,11 @@ import { UserCreate } from "./UserCreate";
 import { Button } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
+import { Redirect } from "react-router-dom";
+
 
 //format toggle button- text turns to white when hover & change to lowercase
+//redirect logic needs event handler/onSubmit- Place in app/nav or login/create?git  
 
 const theme = createMuiTheme({
   palette: {
@@ -16,19 +18,24 @@ const theme = createMuiTheme({
 });
 
 type AcceptedProps = {
-        updateToken: (token:string, authenticated: boolean) => void
-        
+  updateToken: (token: string, authenticated: boolean) => void,
+  sessionData: { authenticated: boolean; token: string | null };
     }
 type UserState = {
   userSignUp: boolean;
+  loggedIn: boolean;
 };
 
+
+
 class Auth extends React.Component<AcceptedProps, UserState> {
+
   constructor(props: AcceptedProps) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
       userSignUp: true,
+      loggedIn: false,
     };
   }
   toggle = (event: any) => {
@@ -44,15 +51,20 @@ class Auth extends React.Component<AcceptedProps, UserState> {
       });
     }
   };
+  afterLogin = (): void => {
+    this.props.updateToken("", true);
+    this.setState({ loggedIn: true })
+  };
 
 
   render() {
     return (
       <div className="wrapper">
         <div className="form-wrapper">
+          {(this.state.loggedIn === true) ? <Redirect to='/PlantIndex' /> : null}
           <div className="container">
             {this.state.userSignUp ? (
-              <UserCreate updateToken={this.props.updateToken} />
+              <UserCreate updateToken={this.props.updateToken} sessionData={this.props.sessionData} />
             ) : (
               <UserLogin updateToken={this.props.updateToken} />
             )}
