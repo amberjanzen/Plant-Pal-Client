@@ -8,8 +8,9 @@ import NavBar from "./Components/Site/NavBar";
 type SessionData = {
   token: string | null;
   authenticated: boolean;
+ 
 };
-let sessionToken = window.localStorage.getItem("token");
+let sessionToken = localStorage.getItem("token");
 let validateSession = sessionToken ? true : false;
 class App extends Component<{}, SessionData> {
   constructor(props: {}) {
@@ -24,10 +25,10 @@ class App extends Component<{}, SessionData> {
     this.setState({ token: userToken, authenticated: authenticated });
   }
 
-  componentWillUnmount(): void {
-    this.updateToken("", false);
-    window.localStorage.removeItem("token");
-  }
+  // componentWillUnmount(): void {
+  //   this.updateToken("", false);
+  //   window.localStorage.removeItem("token");
+  // }
   //   // console.log(sessionToken);
   // }
   //  clearToken =  () => {
@@ -42,7 +43,7 @@ class App extends Component<{}, SessionData> {
       <div className="App">
         <Header />
         <Router>
-          <NavBar updateToken={this.updateToken} sessionData={this.state} />
+          <NavBar updateToken={this.updateToken} sessionData={this.state}  />
         </Router>
         <Footer />
       </div>

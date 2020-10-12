@@ -12,7 +12,7 @@ interface UserCreateProps {
     sessionData: { authenticated: boolean; token: string | null };
     updateToken: (token: string, authenticated: boolean) => void
  }
- interface UserCreateState {
+ export interface UserCreateState {
     firstName : string,
     lastName: string,
     email : string,
@@ -23,6 +23,13 @@ interface UserCreateProps {
        email : string,
        password : string
     }
+}
+
+export interface UserFormState {
+    [key: string]: any;
+    values: UserFormState[];
+    submitSuccess:Boolean;
+    loading: boolean;
 }
 
 type stateValues ={

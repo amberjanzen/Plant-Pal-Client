@@ -1,11 +1,14 @@
 
 import React, { Component } from "react";
-import { Table, Button } from '@material-ui/core'
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 // does not fetch
 // need to query Userid? 
@@ -16,97 +19,110 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 type getLocationProps = {
   sessionData: { authenticated: boolean, token: string | null },
 }
-export interface locationState {
-    location: results[]
-}
-type locationInv = {
-    locationId: number;
-    locationName:string;
-    locationDescription: string;
-    plantCare: string;
-    };
-  
-// interface getLocations {
-//     locationName: string,
-//     locationDescription: string,
-//     sunExposure: string,
+// interface Iheaders ={
+//     Content-Type: string,
+//     Authorization: string,
 // }
-type results = {
-    [index: number]: locationInv
+interface locationInv {
+  locationId: number;
+  locationName: string;
+  locationDescription: string;
+  sunExposure: string;
 }
+
+interface Location {
+  location: locationInv;
+}
+export interface locationState {
+locationData: locationInv[]
+}
+const styles = {
+  table: {
+    minWidth: 650,
+  },
+};
+
 
 class Locations extends React.Component <getLocationProps, locationState> {
     constructor(props: getLocationProps){
         super(props)
         console.log(props);
         this.state = {
-         location: [],
-         
-        }
-    }
-state = {
-    location: []
-    // loading: true,
-    // error: false, 
-}
+         locationData: [],
+        };
+      }
 
   headers: any = {
     "Content-Type": "application/json",
-    'Authorization': this.props.sessionData.token,
+    "Authorization": this.props.sessionData.token,
   };
 
-
-componentDidMount() {
-this.fetchLocations()
-}
-componentDidUpdate() {
-    console.log(this.state);
-}
-
+  
+  componentDidMount() {
+  this.fetchLocations()
+  }
+  componentDidUpdate() {
+  }
+  
   fetchLocations = () => {
     fetch(`http://localhost:4000/location`, {
       method: "GET",
-      headers: this.headers,
+      headers: new Headers(this.headers),
     })
-      .then((res) => res.json())
-      .then((data) => this.setState(data))
-      // console.log(data)) 
-      .catch(err => console.log(err))
+    .then(res =>res.json())
+    .then((data) => {
+    console.log(data)
+    this.setState({locationData: data.data})
+  })
+    .catch((err) => console.log(err));
+    // .catch((err) => console.log(err));
   }
 
-    render() {
-        return (
-          <div>
-              <h3>location</h3>
 
-                  <p className="location">{`location: ${this.state.location}`}</p>
 
-          </div>
-        );
+
+locationInvMap = () => {
+  console.log(this.state.locationData);
+  return this.state.locationData.map((location: locationInv, index) => {
+    return (
+      <TableRow key={index}>
+      <TableCell component="th" scope="row"> {location.locationId} </TableCell>
+      <TableCell align="right">{location.locationName}</TableCell>
+      <TableCell align="right">{location.locationDescription}</TableCell>
+      <TableCell align="right">{location.sunExposure}</TableCell>
+      
+      </TableRow>
+
+    );
+  });
+};
+
+
+
+
+  render() {
+    return (
+      <div>
+        <h3>Location Table</h3>
+        <TableContainer component={Paper}>
+            <Table style={styles.table} aria-label='simple table'>
+                <TableHead>
+                    <TableRow>
+                        <TableCell align='right'>Location Name</TableCell>
+                        <TableCell align='right'>location Description</TableCell>
+                        <TableCell align='right'>Lighting </TableCell>                             
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                {this.locationInvMap()}
+               
+                </TableBody>
+            </Table>
+        </TableContainer>
+      </div>
+    );
+  }
 }
-}
 
-export default Locations;
 
-// export interface locationState {
-//     location: results[]
-// }
-// const { location } = this.state
-
-// {location.map(location => (
-//     <div key={location}>
-//         {this.state.location.locationName} </div>
-// ))}
-//   componentDidMount()
-//  {
-//     fetch(`http://localhost:4000/location/`, {
-//               method: "GET",
-//               headers: this.headers,
-//             })
-//               .then(response => response.json())
-//               .then(response => {this.setState({
-//                   location: response.results,
-//                 }, () => console.log(this.state))
-//             })
-//               .catch(error => console.log(error))
-//           }
+    export default Locations;

@@ -13,6 +13,7 @@ type navState = {};
 type NavProps = {
   updateToken: (token: string, authenticated: boolean) => void;
   sessionData: { authenticated: boolean; token: string | null };
+  
 };
 
 class NavBar extends Component<NavProps, navState> {
@@ -57,7 +58,7 @@ class NavBar extends Component<NavProps, navState> {
               <UserTable updateToken={this.props.updateToken} />
             </Route>
             <Route exact path="/plantIndex">
-              <PlantIndex sessionData={this.props.sessionData} />
+              <PlantIndex sessionData={this.props.sessionData}/>
             </Route>
             <Route exact path="/Resources">
               <Resources />

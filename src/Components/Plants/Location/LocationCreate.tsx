@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
+import Locations from "./Locations";
 import PlantInventory from "../Plant/PlantInventory";
 import { Grid, withStyles } from '@material-ui/core';
 
@@ -13,25 +14,50 @@ import { Grid, withStyles } from '@material-ui/core';
 //location fetch works
 //create location- then create plant (map over)
 
-interface createLocation {
+type NewLocationProps = {
+  sessionData: { authenticated: boolean, token: string | null };
+
+}
+export interface createLocation {
+    locationId: number;
     locationName: string,
     locationDescription: string,
     sunExposure: string,
 }
-type NewLocationProps = {
-  sessionData: { authenticated: boolean, token: string | null };
-}
+
+// export interface LocationFormState {
+//   [key: string]: any,
+//   values: createLocation[]
+//   submitSuccess: boolean,
+//   loading: boolean;
+// }
+
+
 class LocationCreate extends Component<NewLocationProps, createLocation> {
   constructor(props: NewLocationProps) {
     super(props);
     this.state = {
+         locationId: 0,
         locationName: '',
         locationDescription: '',
         sunExposure: '',
+
     };
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidUpdate(){console.log(this.state)}
+
+  //   editUpdateMovie = (movieReview) => {
+  //   this.setState({ movieToUpdate: movieReview });
+  // };
+
+  // updateOn = () => {
+  //   this.setState({ updateActive: true });
+  // };
+
+  // updateOff = () => {
+  //   this.setState({ updateActive: false });
+  // };
 
   handleChange = (e: any) => {
     e.preventDefault();
@@ -49,6 +75,7 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
       headers: this.headers,
       body: JSON.stringify({
         location: {
+        locationId: this.state.locationId,
         locationName: this.state.locationName,
         locationDescription: this.state.locationDescription,
         sunExposure: this.state.sunExposure,
@@ -58,6 +85,7 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
       .then((data) => {
           console.log(data)
       })
+      // .then(() => this.props.locations(this.props.sessionData.token))
       .catch((err) => console.log(err));
 
   }

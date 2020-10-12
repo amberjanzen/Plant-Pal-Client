@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -34,7 +33,7 @@ class PlantIndex extends Component<PlantIndexProps> {
           <Grid item xs={12}>
             <PlantSearch />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6}>
             <LocationTable sessionData={this.props.sessionData} />
           </Grid>
           <Grid item xs={6}>
