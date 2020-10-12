@@ -8,6 +8,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
+import {
+  Button,
+} from "@material-ui/core";
+// import Radium from 'radium';
+import { Link } from "react-router-dom";
 
 
 // does not fetch
@@ -90,7 +95,12 @@ locationInvMap = () => {
       <TableCell align="right">{location.locationName}</TableCell>
       <TableCell align="right">{location.locationDescription}</TableCell>
       <TableCell align="right">{location.sunExposure}</TableCell>
-      
+      <Button type="submit" variant="contained" color="primary">
+              <Link to="/">Edit</Link>
+            </Button>
+            <Button type="submit" variant="contained" color="primary">
+              <Link to="/">Add plant Location</Link>
+            </Button>
       </TableRow>
 
     );
