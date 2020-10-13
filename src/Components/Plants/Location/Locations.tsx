@@ -8,6 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
+import LocationEdit from "./LocationEdit";
+import PlantCreate from "../Plant/PlantCreate";
+import Plants from "./Plants";
 import {
   Button,
 } from "@material-ui/core";
@@ -19,10 +22,14 @@ import { Link } from "react-router-dom";
 // need to query Userid? 
 
 
-
+interface locationProps {
+  sessionData: { authenticated: boolean, token: string | null},
+  location: locationInv;
+}
 
 type getLocationProps = {
   sessionData: { authenticated: boolean, token: string | null },
+
 }
 // interface Iheaders ={
 //     Content-Type: string,
@@ -39,7 +46,8 @@ interface Location {
   location: locationInv;
 }
 export interface locationState {
-locationData: locationInv[]
+locationData: locationInv[],
+
 }
 const styles = {
   table: {
@@ -49,11 +57,12 @@ const styles = {
 
 
 class Locations extends React.Component <getLocationProps, locationState> {
-    constructor(props: getLocationProps){
+    constructor(props: locationProps){
         super(props)
         console.log(props);
         this.state = {
          locationData: [],
+
         };
       }
 
@@ -95,17 +104,22 @@ locationInvMap = () => {
       <TableCell align="right">{location.locationName}</TableCell>
       <TableCell align="right">{location.locationDescription}</TableCell>
       <TableCell align="right">{location.sunExposure}</TableCell>
-      <Button type="submit" variant="contained" color="primary">
-              <Link to="/">Edit</Link>
+            <Button type="submit" variant="contained" color="primary">
+            <LocationEdit sessionData={this.props.sessionData} location={location}/>
+            
             </Button>
             <Button type="submit" variant="contained" color="primary">
-              <Link to="/">Add plant Location</Link>
+            <PlantCreate sessionData={this.props.sessionData} location={location}/>
+          
+            
             </Button>
-      </TableRow>
+         
 
+      </TableRow>
     );
   });
 };
+
 
 
 
@@ -125,8 +139,11 @@ locationInvMap = () => {
                 </TableHead>
                 <TableBody>
                 {this.locationInvMap()}
+                
+                
                
                 </TableBody>
+       
             </Table>
         </TableContainer>
       </div>

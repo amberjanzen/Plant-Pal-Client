@@ -8,6 +8,7 @@ import PlantTable from "./Plant/PlantTable";
 
 type PlantIndexProps = {
   sessionData: { authenticated: boolean; token: string | null };
+
 };
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +34,8 @@ class PlantIndex extends Component<PlantIndexProps> {
           <Grid item xs={12}>
             <PlantSearch />
           </Grid>
-          <Grid item xs={12}>
-            <LocationTable sessionData={this.props.sessionData} />
+          <Grid item xs={6}>
+            <LocationTable sessionData={this.props.sessionData}  />
           </Grid>
           <Grid item xs={6}>
             <PlantTable sessionData={this.props.sessionData} />

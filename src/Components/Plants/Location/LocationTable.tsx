@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 
 type LocationIndexProps = {
     sessionData: { authenticated: boolean, token: string | null },
+ 
 }
 
 
@@ -15,6 +16,9 @@ class PlantTable extends Component <LocationIndexProps> {
     constructor(props: LocationIndexProps){
         super(props)
         console.log(props);
+        this.state ={
+            
+        }
     }
     render(){
         return(

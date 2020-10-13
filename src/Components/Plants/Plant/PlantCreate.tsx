@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { EditOutlined } from "@material-ui/icons";
 
 //sequelize database error "22P02"
 
@@ -16,27 +22,56 @@ import { FormControl, TextField, Button } from "@material-ui/core";
 //session token not working?
 
 interface createPlant {
+  locationData: locationInv[];
   plantName: string;
   plantType: string;
   sunRequirement: string;
   waterNeeds: string;
   plantCare: string;
+  open: boolean;
 }
 type NewPlantProps = {
   sessionData: { authenticated: boolean; token: string | null };
+  location: locationInv
 };
+interface locationInv {
+  locationId: number;
+  locationName: string;
+  locationDescription: string;
+  sunExposure: string;
+}
+
+
 class PlantCreate extends Component<NewPlantProps, createPlant> {
   constructor(props: NewPlantProps) {
     super(props);
     this.state = {
+      open: false,
       plantName: "",
       plantType: "",
       sunRequirement: "",
       waterNeeds: "",
       plantCare: "",
+      locationData: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
+
+    
+handleClickOpen = () => {
+  console.log(this.state)
+  this.setState({ open: true });
+};
+submitClick = (locationId: number) => {
+  this.handleClose();
+  this.handleSubmit(locationId);
+};
+
+handleClose = () => {
+  this.setState({ open: false });
+};
+
+  
   componentDidUpdate() {
     console.log(this.state);
   }
@@ -68,9 +103,8 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
   //   fetchMedia(localStorage.getItem("token"));
   // }, []);
 
-  handleSubmit = (e: any) => {
-    e.preventDefault();
-    fetch(`http://localhost:4000/plant/create`, {
+  handleSubmit = (locationId: number) => {
+    fetch(`http://localhost:4000/plant/${locationId}`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -84,8 +118,9 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
       }),
     })
       .then((res) => res.json())
-      .then((sessionData) => {
-        console.log(sessionData);
+      .then((locationName) => {
+        console.log(`plant added to ${locationName}`);
+        this.handleClose();
       })
       .catch((err) => console.log(err));
   };
@@ -110,10 +145,20 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
 
   render() {
     return (
-      <div className="wrapper">
-        <div className="form-wrapper">
+      <div>
+
+        <Button color="secondary" onClick={this.handleClickOpen}>
+          <EditOutlined />
+        </Button>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+          >
+          <DialogTitle id="form-dialog-title">update location</DialogTitle>
+          <DialogContent>
+          <FormControl>
           <h2>Sign Up</h2>
-          <form onSubmit={this.handleSubmit}>
             <div className="plantName">
               <label htmlFor="plantName">Name</label>
               <input
@@ -154,14 +199,25 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
                 onChange={this.handleChange}
               />
             </div>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button 
+            value={this.props.location.locationId}
+            onClick= {(e) =>{
+              this.handleSubmit(this.props.location.locationId) 
+            }} color="primary">
+              add plant
+            </Button>
+          </DialogActions>
 
-            <div className="submit">
-              <button>Sign up</button>
-              <small>Already Have an Account? Click to Login here</small>
-            </div>
-          </form>
+
+          </Dialog>
         </div>
-      </div>
+
     );
   }
 }

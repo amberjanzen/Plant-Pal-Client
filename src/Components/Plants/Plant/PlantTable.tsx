@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PlantEdit from "./PlantEdit";
 import PlantCreate from "./PlantCreate";
 import PlantInventory from "./PlantInventory";
+import Plants from "../Location/Plants";
 
 type PlantIndexProps = {
     sessionData: { authenticated: boolean; token: string | null },
@@ -17,7 +18,8 @@ class PlantTable extends Component<PlantIndexProps> {
     render(){
         return(
             <div>
-                <h3>PlantTable</h3>
+
+                <Plants  sessionData={this.props.sessionData} />
                 
 
                 {/* <PlantInventory ={this.props}/> */}
