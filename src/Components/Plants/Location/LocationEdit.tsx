@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { EditOutlined } from "@material-ui/icons";
+// import { EditOutlined } from "@material-ui/icons";
 
 //update location modal onclick
 // map over location array?
@@ -139,7 +139,7 @@ handleClose = () => {
     return (
       <div>
         <Button color="secondary" onClick={this.handleClickOpen}>
-          <EditOutlined />
+          {/* <EditOutlined /> */}
         </Button>
         <Dialog
           open={this.state.open}
