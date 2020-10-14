@@ -9,6 +9,7 @@ type PlantIndexProps = {
 }
 
 
+
 class PlantTable extends Component<PlantIndexProps> {
     constructor(props: PlantIndexProps){
     super(props)

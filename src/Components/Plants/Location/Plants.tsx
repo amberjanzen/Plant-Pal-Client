@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React, { Component } from "react";
+import { FormControl, TextField, Button } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,12 +9,19 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
+import PlantEdit from "../Plant/PlantEdit";
 // import LocationEdit from "./LocationEdit";
 // import PlantCreate from "../Plant/PlantCreate";
 
 
 interface plantProps {
     sessionData: { authenticated: boolean, token: string | null},
+  }
+
+  interface editPlantProps {
+    sessionData: { authenticated: boolean, token: string | null},
+    plant: plantInv;
+    location: locationInv;
   }
 
 
@@ -24,6 +32,8 @@ interface plantInv {
     waterNeeds: string;
     plantCare: string;
     locationId: number, 
+    locationName: number, 
+    plantId: number, 
   }
 
 
@@ -41,8 +51,10 @@ interface plantInv {
       minWidth: 650,
     },
   };
-  
+
 class Plant extends Component<plantProps, plantState> {
+    constructor(props: editPlantProps) {
+        super(props);}
  state = {
      plantData: []
  }
@@ -81,7 +93,10 @@ class Plant extends Component<plantProps, plantState> {
             <TableCell align="right">{plant.plantType}</TableCell>
             <TableCell align="right">{plant.sunRequirement}</TableCell>
             <TableCell align="right">{plant.waterNeeds}</TableCell>
-            <TableCell align="right">{plant.plantCare}</TableCell>    
+            <TableCell align="right">{plant.plantCare}</TableCell> 
+            <Button type="submit" variant="contained" color="primary">
+            <PlantEdit sessionData={this.props.sessionData} plant={plant}/> 
+            </Button>  
             </TableRow>
           );
         });

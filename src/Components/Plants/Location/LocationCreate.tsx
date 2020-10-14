@@ -84,6 +84,7 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
       }).then(res => res.json())
       .then((data) => {
           console.log(data)
+          window.location.reload()
       })
       // .then(() => this.props.locations(this.props.sessionData.token))
       .catch((err) => console.log(err));

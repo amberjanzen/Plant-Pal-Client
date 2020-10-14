@@ -121,6 +121,7 @@ handleClose = () => {
       .then((locationName) => {
         console.log(`plant added to ${locationName}`);
         this.handleClose();
+        window.location.reload()
       })
       .catch((err) => console.log(err));
   };
