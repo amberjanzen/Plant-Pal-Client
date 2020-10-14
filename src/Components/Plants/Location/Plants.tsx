@@ -21,7 +21,7 @@ interface plantProps {
   interface editPlantProps {
     sessionData: { authenticated: boolean, token: string | null},
     plant: plantInv;
-    location: locationInv;
+ 
   }
 
 
