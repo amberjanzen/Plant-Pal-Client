@@ -8,6 +8,7 @@ import NavBar from "./Components/Site/NavBar";
 type SessionData = {
   token: string | null;
   authenticated: boolean;
+  admin: boolean
  
 };
 let sessionToken = localStorage.getItem("token");
@@ -18,12 +19,18 @@ class App extends Component<{}, SessionData> {
     this.state = {
       authenticated: validateSession,
       token: sessionToken,
+      admin: false,
     };
     this.updateToken = this.updateToken.bind(this);
+    // this.updateAdmin = this.updateAdmin.bind(this)
+    // this.protectedViews = this.protectedViews.bind(this);
   }
   updateToken(userToken: string, authenticated: boolean): void {
     this.setState({ token: userToken, authenticated: authenticated });
+  //   localStorage.setItem("admin", JSON.stringify(newAdmin));
+	// 	this.setState({admin: newAdmin});
   }
+
 
   // componentWillUnmount(): void {
   //   this.updateToken("", false);
@@ -43,7 +50,7 @@ class App extends Component<{}, SessionData> {
       <div className="App">
         <Header />
         <Router>
-          <NavBar updateToken={this.updateToken} sessionData={this.state}  />
+          <NavBar updateToken={this.updateToken} sessionData={this.state} />
         </Router>
         <Footer />
       </div>

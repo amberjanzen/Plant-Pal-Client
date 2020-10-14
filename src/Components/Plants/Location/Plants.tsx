@@ -32,7 +32,6 @@ interface plantInv {
     waterNeeds: string;
     plantCare: string;
     locationId: number, 
-    locationName: number, 
     plantId: number, 
   }
 
@@ -54,10 +53,11 @@ interface plantInv {
 
 class Plant extends Component<plantProps, plantState> {
     constructor(props: editPlantProps) {
-        super(props);}
- state = {
-     plantData: []
- }
+        super(props);
+        this.state = {
+            plantData: []
+        }
+      }
 
     headers: any = {
         "Content-Type": "application/json",

@@ -27,10 +27,11 @@ type LocationEditState = {
   locationData: locationInv[];
   locationId: number;
   locationName: string;
-   locationDescription: string;
+  locationDescription: string;
   sunExposure: string;
   type: string;
   open: boolean;
+  submitted: boolean;
 };
 class LocationEdit extends Component<EditLocationProps, LocationEditState> {
   constructor(props: EditLocationProps) {
@@ -43,6 +44,7 @@ class LocationEdit extends Component<EditLocationProps, LocationEditState> {
       locationDescription: "",
       sunExposure: "",
       locationData: [],
+      submitted: false,
     };
     // this.handleChange = this.handleChange.bind(this);
   }
@@ -62,32 +64,17 @@ handleClose = () => {
     "Content-Type": "application/json",
     Authorization: this.props.sessionData.token,
   };
-  
+
   submitClick = (locationId: number) => {
     this.handleClose();
     this.handleSubmit(locationId);
+    this.handleDelete();
   };
-  
+
   componentDidMount() {
      this.setState(this.props.location)
   }
-  
-  // fetchLocations = () => {
-  //   fetch(`http://localhost:4000/location/`, {
-  //     method: "GET",
-  //     headers: new Headers(this.headers),
-  //   })
-  //   .then(res =>res.json())
-  //   .then((data) => {
-  //     console.log(data)
-  //     this.setState({locationData: data.data})
-  //   })
-  //   .catch((err) => console.log(err));
-  //   // .catch((err) => console.log(err));
-  // }
-  // componentDidUpdate() {
-  // }
-  
+
   handleSubmit = ( locationId: number ) => {
     if (this.props.sessionData !== undefined) {
       fetch(`http://localhost:4000/location/update/${locationId}`, {
@@ -104,6 +91,7 @@ handleClose = () => {
       })
       .then(response => {
         if (response.ok === true) {
+          this.setState({submitted:true})
           return response.json()
           .then(locationId=> {
             console.log(`location at id ${locationId} updated.`)
@@ -115,26 +103,41 @@ handleClose = () => {
         }
       })
       .catch((error: Error) => console.log(error))
-    } 
+    }
     else {
       console.log('Destination not updated.')
     }
   };
+  handleDelete = (): any => {
+    if (this.props.sessionData !== undefined) {
+        fetch(`http://localhost:4000/location/${this.props.location.locationId}`, {
+            method: 'DELETE',
+            headers: this.headers
+        })
+            .then(response => {
+                console.log(response.ok)
+                if (response.ok === true) {
+                    console.log(`Destination with the id ${this.props.location.locationId} deleted.`)
+                    this.handleClose()
+                    // window.location.reload()
+                } else {
+                    console.log('Destination not deleted.')
+                }
+            })
+            .catch((error: Error) => console.log(error))
+    }
+}
 
-  // handleChange = (e: any) => {
-  //   console.log('any')
-  //   e.preventDefault();
-  //   const { name, value} = e.target;
-  //   this.setState({...this.state, [name]: value });
+  // handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   this.setState({ type: event.target.value });
   // };
-  
+
   
   
   render() {
     // {const handleSubmit={this.handleSubmit}}
     return (
       <div>
-        
         <Button color="secondary" onClick={this.handleClickOpen}>
           <EditOutlined />
         </Button>
@@ -146,7 +149,6 @@ handleClose = () => {
           <DialogTitle id="form-dialog-title">update location</DialogTitle>
           <DialogContent>
             <FormControl>
-              
               <TextField
                 label="Location"
                 variant="outlined"
@@ -191,6 +193,10 @@ handleClose = () => {
               this.handleSubmit(this.state.locationId) 
             }} color="primary">
               Submit Changes
+            </Button>
+            <Button 
+            onClick= {this.handleDelete} color="primary">
+              delete location
             </Button>
           </DialogActions>
         </Dialog>

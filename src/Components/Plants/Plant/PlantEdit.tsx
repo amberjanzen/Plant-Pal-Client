@@ -16,7 +16,8 @@ interface plantInv {
     sunRequirement: string;
     waterNeeds: string;
     plantCare: string;
-    locationName: number,
+    locationId: number;
+    plantId: number;
 }
 
 
@@ -35,7 +36,7 @@ type plantEditState = {
     locationName: string,
     type: string;
     open: boolean;
-    plantId: number;
+    id: number;
 };
 
 
@@ -45,7 +46,7 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
     this.state = {
       open: false,
       plantName: "",
-      plantId: 0,
+      id: 0,
       plantType: "",
       sunRequirement: "",
       locationName: "",
@@ -54,6 +55,7 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
       type: "",
       plantData: [],
     };
+      // this.handleChange = this.handleChange.bind(this);
   }
 
 
@@ -72,25 +74,25 @@ handleClose = () => {
     Authorization: this.props.sessionData.token,
   };
 
-  submitClick = (plantId: number) => {
+  submitClick = () => {
     this.handleClose();
-    this.handleSubmit(plantId);
+    this.handleSubmit();
   };
 
-//   componentDidMount() {
-//      this.setState(this.props.plant)
-//   }
+  // componentDidMount() {
+  //    this.setState(plantInv)
+  // }
 
 
-  handleSubmit = ( plantId: number ) => {
+  handleSubmit = () => {
     if (this.props.sessionData !== undefined) {
-      fetch(`http://localhost:4000/plant/update/${plantId}`, {
+      fetch(`http://localhost:4000/plant/update/${this.props.plant.plantId}`, {
         method: "PUT",
         headers: this.headers,
         body: JSON.stringify({
           plant: {
-            plantId: this.state.plantId,
-            plantName: this.state.plantName,
+            // plantId: this.state.plantId,
+            [this.props.plant.plantName]: this.state.plantName,
             plantType: this.state.plantType,
             sunRequirement: this.state.sunRequirement,
             waterNeeds: this.state.waterNeeds,
@@ -101,9 +103,9 @@ handleClose = () => {
       .then(response => {
         if (response.ok === true) {
           return response.json()
-          .then(plantId=> {
+          .then(id=> {
             console.log(`plant updated.`)
-            console.log('updatedData:', plantId)
+            console.log('updatedData:', id)
             this.handleClose();
           })
         } else {
@@ -116,7 +118,14 @@ handleClose = () => {
       console.log('plant not updated.')
     }
   };
-
+//  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     this.setState({ type: event.target.value });
+//   };
+// handleChange = (e: any) => {
+//   e.preventDefault();
+//   const { name, value} = e.target;
+//   this.setState(Object.assign(this.state, { [name]: value }));
+// };
   
   
   render() {
@@ -141,7 +150,7 @@ handleClose = () => {
                 variant="outlined"
                 type="text"
                 name= "plantName"
-                value={this.state.plantName}
+                value={this.props.plant.plantName}
                 onChange={(e) => {
                   this.setState({ plantName: e.target.value });
                 }}
@@ -152,7 +161,7 @@ handleClose = () => {
                 variant="outlined"
                 type="text"
                 name= "plantType"
-                value={this.state.plantType}
+                value={this.props.plant.plantType}
                 onChange={(e) => {
                   this.setState({ plantType: e.target.value });
                 }}
@@ -163,7 +172,7 @@ handleClose = () => {
                 variant="outlined"
                 type="text"
                 name= "sunRequirement"
-                value={this.state.sunRequirement}
+                value={this.props.plant.sunRequirement}
                 onChange={(e) => {
                   this.setState({ sunRequirement: e.target.value });
                 }}
@@ -174,7 +183,7 @@ handleClose = () => {
                 variant="outlined"
                 type="text"
                 name= "waterNeeds"
-                value={this.state.waterNeeds}
+                value={this.props.plant.waterNeeds}
                 onChange={(e) => {
                   this.setState({ waterNeeds: e.target.value });
                 }}
@@ -185,7 +194,7 @@ handleClose = () => {
                 variant="outlined"
                 type="text"
                 name= "plantCare"
-                value={this.state.plantCare}
+                value={this.props.plant.plantCare}
                 onChange={(e) => {
                   this.setState({ plantCare: e.target.value });
                 }}
@@ -198,10 +207,8 @@ handleClose = () => {
               Cancel
             </Button>
             <Button 
-            value={this.state.plantId}
-            onClick= {(e) =>{
-              this.handleSubmit(this.state.plantId) 
-            }} color="primary">
+            value={this.props.plant.plantId}
+            onClick= {this.handleSubmit} color="primary">
               Submit Changes
             </Button>
           </DialogActions>
