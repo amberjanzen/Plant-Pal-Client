@@ -1,11 +1,11 @@
+
+
 .App {
   text-align: center;
   background-color: white;
 }
 body {
-  padding: 15px;
   background-color:white;
-  font: Belleza;
 }
 
 .main {
@@ -26,24 +26,16 @@ ul {
   padding: 5px;
 }
 
-nav {
-  margin-top: 0.5em!important;
-  text-align: center;
-  background-color: #53565A;
-  color: white;
-}
-
-nav a {
-  color: white;
-}
-
-nav  p {
-  margin-top: 0.8em!important;
-}
 .footer {
-  background-color: #53565A;
-  color: white;
-  margin-top: 10px;
+    background-color: #F8F8F8;
+    border-top: 1px solid #E7E7E7;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    width: 100%
 }
 
 .footer  p {
