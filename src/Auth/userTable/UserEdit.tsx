@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import { Redirect } from "react-router-dom";
+import APIURL from "../../../src/helpers/environment";
 
 interface userProps {
   sessionData: { authenticated: boolean; token: string | null };
@@ -28,7 +29,7 @@ class UserEdit extends Component<userProps> {
 
    
   delUser = (): any => {
-    fetch(`http://localhost:4000/user/`, {
+    fetch(`${APIURL}/user/`, {
         method: 'DELETE',
         headers: this.headers
     })
@@ -55,7 +56,7 @@ class UserEdit extends Component<userProps> {
             password: "",
           }}
           onSubmit={(values: User) => {
-            fetch(`http://localhost:4000/user/`, {
+            fetch(`${APIURL}/user/`, {
               method: "PUT",
               headers: this.headers,
               body: JSON.stringify({

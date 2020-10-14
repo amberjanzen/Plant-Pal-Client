@@ -1,6 +1,7 @@
 import React from "react";
 import '../StyleCSS/auth.css';
 import { Redirect } from "react-router-dom";
+import APIURL from "../../src/helpers/environment";
 
 
 //first and last name do not show up in pg admin
@@ -77,7 +78,7 @@ export class UserCreate extends React.Component<UserCreateProps, UserCreateState
                 }
                 handleSubmit = (event : any) => {
                     event.preventDefault();
-                    fetch(`http://localhost:4000/user/signup`, {
+                    fetch(`${APIURL}/user/signup`, {
                         method: "POST",
                         body: JSON.stringify({
                             firstName: this.state.firstName,

@@ -5,7 +5,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-// import { EditOutlined } from "@material-ui/icons";
+import { EditOutlined } from "@material-ui/icons";
+import APIURL from "../../../helpers/environment";
 
 //update location modal onclick
 // map over location array?
@@ -77,7 +78,7 @@ handleClose = () => {
 
   handleSubmit = ( locationId: number ) => {
     if (this.props.sessionData !== undefined) {
-      fetch(`http://localhost:4000/location/update/${locationId}`, {
+      fetch(`${APIURL}/location/update/${locationId}`, {
         method: "PUT",
         headers: this.headers,
         body: JSON.stringify({
@@ -110,7 +111,7 @@ handleClose = () => {
   };
   handleDelete = (): any => {
     if (this.props.sessionData !== undefined) {
-        fetch(`http://localhost:4000/location/${this.props.location.locationId}`, {
+        fetch(`${APIURL}/location/${this.props.location.locationId}`, {
             method: 'DELETE',
             headers: this.headers
         })
@@ -139,7 +140,7 @@ handleClose = () => {
     return (
       <div>
         <Button color="secondary" onClick={this.handleClickOpen}>
-          {/* <EditOutlined /> */}
+          <EditOutlined />
         </Button>
         <Dialog
           open={this.state.open}
