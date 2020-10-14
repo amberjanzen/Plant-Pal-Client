@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../StyleCSS/auth.css";
 import { Button, TextField } from "@material-ui/core";
 import { Form, Formik } from "formik";
+import APIURL from "../../src/helpers/environment";
 
 interface LoginState {
   email: string;
@@ -18,7 +19,7 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
     loggedIn: false,
   };
   LoginSubmit(values: LoginState, loginProps: LoginFormProps) {
-    fetch(`http://localhost:4000/user/login`, {
+    fetch(`${APIURL}/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

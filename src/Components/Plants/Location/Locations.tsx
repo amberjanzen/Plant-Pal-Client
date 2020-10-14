@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 // import Radium from 'radium';
 import { Link } from "react-router-dom";
+import APIURL from "../../../helpers/environment";
 
 
 // does not fetch
@@ -79,7 +80,7 @@ class Locations extends React.Component <getLocationProps, locationState> {
   }
   
   fetchLocations = () => {
-    fetch(`http://localhost:4000/location`, {
+    fetch(`${APIURL}/location`, {
       method: "GET",
       headers: new Headers(this.headers),
     })

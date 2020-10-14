@@ -5,7 +5,7 @@ import Auth from "../../Auth/Auth";
 import UserTable from "../../Auth/userTable/UserTable";
 import PlantIndex from "../Plants/PlantIndex";
 import Resources from "./Resources";
-import "../../StyleCSS/Header.css";
+import "../../StyleCSS/header.css";
 
 // import styled from "styled-components";
 

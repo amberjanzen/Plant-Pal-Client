@@ -12,7 +12,7 @@ import Dialog from '@material-ui/core/Dialog';
 import PlantEdit from "../Plant/PlantEdit";
 // import LocationEdit from "./LocationEdit";
 // import PlantCreate from "../Plant/PlantCreate";
-
+import APIURL from "../../../helpers/environment";
 
 interface plantProps {
     sessionData: { authenticated: boolean, token: string | null},
@@ -71,7 +71,7 @@ class Plant extends Component<plantProps, plantState> {
     componentDidUpdate() {
     }
     itemsFetch = ()  => {
-        fetch(` http://localhost:4000/plant/myplants`, {
+        fetch(` ${APIURL}/plant/myplants`, {
             method: 'GET',
             headers: this.headers
         })
