@@ -1,6 +1,11 @@
 p, div {
     font-family: Lato;
   }
+body {
+  font-family: 'Lora', serif;
+  
+}
+  
     
   .wrapper {
     height: 97vh;

@@ -6,6 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { EditOutlined } from "@material-ui/icons";
+import '../../../StyleCSS/auth.css';
 
 //sequelize database error "22P02"
 
@@ -31,8 +32,9 @@ interface createPlant {
   open: boolean;
 }
 type NewPlantProps = {
-  sessionData: { authenticated: boolean; token: string | null };
+  sessionData: { authenticated: boolean, token: string | null},
   location: locationInv
+
 };
 interface locationInv {
   locationId: number;
@@ -148,9 +150,10 @@ handleClose = () => {
     return (
       <div>
 
-        <Button color="secondary" onClick={this.handleClickOpen}>
-          <EditOutlined />
-        </Button>
+        <button color="secondary" onClick={this.handleClickOpen}>
+          Add Plant
+
+        </button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -159,60 +162,59 @@ handleClose = () => {
           <DialogTitle id="form-dialog-title">update location</DialogTitle>
           <DialogContent>
           <FormControl>
-          <h2>Sign Up</h2>
-            <div className="plantName">
-              <label htmlFor="plantName">Name</label>
-              <input
+            <TextField
+                label="Plant Name"
+                variant="outlined"
                 type="string"
                 name="plantName"
                 onChange={this.handleChange}
               />
-            </div>
-            <div className="text">
-              <label htmlFor="plantType">Type</label>
-              <input
+              <br />
+            <TextField
+                label="Type"
+                variant="outlined"
                 type="string"
                 name="plantType"
                 onChange={this.handleChange}
               />
-            </div>
-            <div className="sunRequirement">
-              <label htmlFor="sunRequirement">sun</label>
-              <input
+              <br />
+               <TextField
+                label="Sun Requirements"
+                variant="outlined"
                 type="string"
                 name="sunRequirement"
                 onChange={this.handleChange}
               />
-            </div>
-            <div className="waterNeeds">
-              <label htmlFor="waterNeeds">water</label>
-              <input
+              <br />
+             <TextField
+                label="Watering Frequency"
+                variant="outlined"
                 type="string"
                 name="waterNeeds"
                 onChange={this.handleChange}
               />
-            </div>
-            <div className="plantCare">
-              <label htmlFor="plantCare">care</label>
-              <input
+              <br />
+               <TextField
+                label="Notes"
+                variant="outlined"
                 type="string"
                 name="plantCare"
                 onChange={this.handleChange}
               />
-            </div>
+              <br />
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="secondary">
+            <button onClick={this.handleClose} color="secondary">
               Cancel
-            </Button>
-            <Button 
+            </button>
+            <button 
             value={this.props.location.locationId}
             onClick= {(e) =>{
               this.handleSubmit(this.props.location.locationId) 
             }} color="primary">
               add plant
-            </Button>
+            </button>
           </DialogActions>
 
 

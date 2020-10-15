@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, FormControl, Container, Grid } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import { Redirect } from "react-router-dom";
 import APIURL from "../../../src/helpers/environment";
 
 interface userProps {
-  sessionData: { authenticated: boolean; token: string | null };
+sessionData: { authenticated: boolean; token: string | null};
+
 }
 interface User {
   firstName: string;
@@ -46,6 +47,10 @@ class UserEdit extends Component<userProps> {
 }
   render() {
     return (
+      <Container>
+         <Grid container spacing={3}>
+
+         </Grid>
       <div>
         <h1>Update User</h1>
         <Formik
@@ -80,48 +85,71 @@ class UserEdit extends Component<userProps> {
           {({ values, handleChange }) => (
             <Form>
               <div>
+              <br />
                 <TextField
                   name="firstName"
                   label="First Name"
+                  variant="outlined"
                   value={values.firstName}
                   onChange={handleChange}
                 />
               </div>
+              <br />
               <div>
+              <br />
                 <TextField
                   name="lastName"
                   label="Last Name"
+                  variant="outlined"
                   value={values.lastName}
                   onChange={handleChange}
                 />
               </div>
+              <br />
               <div>
+              <br />
                 <TextField
                   name="email"
                   label="E-mail"
                   type="email"
+                  variant="outlined"
                   value={values.email}
                   onChange={handleChange}
                 />
               </div>
+              <br />
               <div>
+                <br />
                 <TextField
                   name="password"
                   label="Password"
                   type="password"
+                  variant="outlined"
                   value={values.password}
                   onChange={handleChange}
                 />
+                <br />
               </div>
+              <div>
+              <br />
+              <Button 
+              type="submit"
+              variant ="contained"
+              color = "primary"
+            
+              >Update Account</Button>
 
-              <Button type="submit">Update Account</Button>
+              </div>
             </Form>
           )}
         </Formik>
         {this.state.submitted===true? <Redirect to='/Auth'/>:null}
                 <br />
-                <Button color="secondary" onClick={this.delUser}>Delete My Account</Button>
+                <Button
+                variant ="contained"
+                 color="secondary" onClick={this.delUser}>Delete My Account</Button>
       </div>
+      </Container>
     );
   }
 }

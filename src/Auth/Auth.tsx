@@ -18,8 +18,10 @@ const theme = createMuiTheme({
 });
 
 type AcceptedProps = {
-  updateToken: (token: string, authenticated: boolean) => void,
-  sessionData: { authenticated: boolean; token: string | null };
+  updateToken: (token: string, authenticated: boolean) => void;
+  sessionData: { authenticated: boolean; token: string | null};
+  updateAdmin: (admin: boolean) => void,
+
     }
 type UserState = {
   userSignUp: boolean;
@@ -36,6 +38,7 @@ class Auth extends React.Component<AcceptedProps, UserState> {
     this.state = {
       userSignUp: true,
       loggedIn: false,
+
     };
   }
   toggle = (event: any) => {
@@ -66,7 +69,7 @@ class Auth extends React.Component<AcceptedProps, UserState> {
             {this.state.userSignUp ? (
               <UserCreate updateToken={this.props.updateToken} sessionData={this.props.sessionData} />
             ) : (
-              <UserLogin updateToken={this.props.updateToken} />
+              <UserLogin updateToken={this.props.updateToken}  updateAdmin={this.props.updateAdmin}/>
             )}
             <ThemeProvider theme={theme}>
               <Button

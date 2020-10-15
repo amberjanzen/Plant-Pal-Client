@@ -5,21 +5,20 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { EditOutlined } from "@material-ui/icons";
+import APIURL from "../../../helpers/environment";
 
 //update location modal onclick
-// map over location array?
+
 
 interface plantInv {
-    plantName: string;
-    plantType: string;
-    sunRequirement: string;
-    waterNeeds: string;
-    plantCare: string;
-    locationId: number;
-    plantId: number;
+  plantName: string;
+  plantType: string;
+  sunRequirement: string;
+  waterNeeds: string;
+  plantCare: string;
+  locationId: number;
+  plantId: number;
 }
-
 
 type EditPlantProps = {
   sessionData: { authenticated: boolean; token: string | null };
@@ -27,18 +26,18 @@ type EditPlantProps = {
 };
 
 type plantEditState = {
-    plantData: plantInv[];
-    plantName: string;
-    plantType: string;
-    sunRequirement: string;
-    waterNeeds: string;
-    plantCare: string;
-    locationName: string,
-    type: string;
-    open: boolean;
-    id: number;
+  plantData: plantInv[];
+  plantName: string;
+  plantType: string;
+  sunRequirement: string;
+  waterNeeds: string;
+  plantCare: string;
+  locationId: number;
+  type: string;
+  open: boolean;
+  plantId: number;
+  submitted: boolean;
 };
-
 
 class PlantEdit extends Component<EditPlantProps, plantEditState> {
   constructor(props: EditPlantProps) {
@@ -46,53 +45,52 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
     this.state = {
       open: false,
       plantName: "",
-      id: 0,
+      type: "",
+      plantId: 0,
       plantType: "",
       sunRequirement: "",
-      locationName: "",
       waterNeeds: "",
+      locationId: 0,
       plantCare: "",
-      type: "",
       plantData: [],
+      submitted: false,
     };
-      // this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
+  handleClickOpen = () => {
+    console.log(this.state);
+    this.setState({ open: true });
+  };
 
-handleClickOpen = () => {
-  console.log(this.state)
-  this.setState({ open: true });
-};
-
-handleClose = () => {
-  this.setState({ open: false });
-};
-
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   headers: any = {
     "Content-Type": "application/json",
     Authorization: this.props.sessionData.token,
   };
 
-  submitClick = () => {
+  submitClick = (plantId: number) => {
     this.handleClose();
-    this.handleSubmit();
+    this.handleSubmit(plantId);
+    this.handleDelete();
   };
 
-  // componentDidMount() {
-  //    this.setState(plantInv)
-  // }
+  componentDidMount() {
+    this.setState(this.props.plant);
+  }
 
-
-  handleSubmit = () => {
+  handleSubmit = (plantId: number) => {
     if (this.props.sessionData !== undefined) {
-      fetch(`http://localhost:4000/plant/update/${this.props.plant.plantId}`, {
+      fetch(`http://localhost:4000/plant/update/${plantId}`, {
         method: "PUT",
         headers: this.headers,
         body: JSON.stringify({
           plant: {
             // plantId: this.state.plantId,
-            [this.props.plant.plantName]: this.state.plantName,
+            plantName: this.state.plantName,
             plantType: this.state.plantType,
             sunRequirement: this.state.sunRequirement,
             waterNeeds: this.state.waterNeeds,
@@ -100,117 +98,130 @@ handleClose = () => {
           },
         }),
       })
-      .then(response => {
-        if (response.ok === true) {
-          return response.json()
-          .then(id=> {
-            console.log(`plant updated.`)
-            console.log('updatedData:', id)
-            this.handleClose();
-          })
-        } else {
-          console.log('plant not updated.')
-        }
-      })
-      .catch((error: Error) => console.log(error))
-    } 
-    else {
-      console.log('plant not updated.')
+        .then((response) => {
+          if (response.ok === true) {
+            this.setState({ submitted: true });
+            return response.json().then((plantId) => {
+              console.log(`plant updated.`);
+              console.log("updatedData:", plantId);
+              this.handleClose();
+              window.location.reload();
+            });
+          } else {
+            console.log("plant not updated.");
+          }
+        })
+        .catch((error: Error) => console.log(error));
+    } else {
+      console.log("plant not updated.");
     }
   };
-//  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     this.setState({ type: event.target.value });
-//   };
-// handleChange = (e: any) => {
-//   e.preventDefault();
-//   const { name, value} = e.target;
-//   this.setState(Object.assign(this.state, { [name]: value }));
-// };
-  
-  
+
+  handleDelete = (): any => {
+    if (this.props.sessionData !== undefined) {
+      fetch(`${APIURL}/plant/${this.props.plant.plantId}`, {
+        method: "DELETE",
+        headers: this.headers,
+      })
+        .then((response) => {
+          console.log(response.ok);
+          if (response.ok === true) {
+            console.log(
+              `Destination with the id ${this.props.plant.plantId} deleted.`
+            );
+            this.handleClose();
+            window.location.reload();
+          } else {
+            console.log("Destination not deleted.");
+          }
+        })
+        .catch((error: Error) => console.log(error));
+    }
+  };
+
   render() {
-  
     return (
       <div>
-        
-        <Button color="secondary" onClick={this.handleClickOpen}>
-          <EditOutlined />
-        </Button>
+        <button onClick={this.handleClickOpen}>
+          Update Plant
+        </button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
-          >
+        >
           <DialogTitle id="form-dialog-title">update location</DialogTitle>
           <DialogContent>
             <FormControl>
-              
               <TextField
                 label="plantName"
                 variant="outlined"
                 type="text"
-                name= "plantName"
-                value={this.props.plant.plantName}
+                name="plantName"
+                value={this.state.plantName}
                 onChange={(e) => {
                   this.setState({ plantName: e.target.value });
                 }}
-                />
+              />
               <br />
               <TextField
                 label="Description"
                 variant="outlined"
                 type="text"
-                name= "plantType"
-                value={this.props.plant.plantType}
+                name="plantType"
+                value={this.state.plantType}
                 onChange={(e) => {
                   this.setState({ plantType: e.target.value });
                 }}
-                />
+              />
               <br />
               <TextField
                 label="Sun Requirement"
                 variant="outlined"
                 type="text"
-                name= "sunRequirement"
-                value={this.props.plant.sunRequirement}
+                name="sunRequirement"
+                value={this.state.sunRequirement}
                 onChange={(e) => {
                   this.setState({ sunRequirement: e.target.value });
                 }}
-                />
-               <br />
+              />
+              <br />
               <TextField
                 label="Water Needs"
                 variant="outlined"
                 type="text"
-                name= "waterNeeds"
-                value={this.props.plant.waterNeeds}
+                name="waterNeeds"
+                value={this.state.waterNeeds}
                 onChange={(e) => {
                   this.setState({ waterNeeds: e.target.value });
                 }}
-                />
-               <br />
+              />
+              <br />
               <TextField
                 label="Plant Care"
                 variant="outlined"
                 type="text"
-                name= "plantCare"
-                value={this.props.plant.plantCare}
+                name="plantCare"
+                value={this.state.plantCare}
                 onChange={(e) => {
                   this.setState({ plantCare: e.target.value });
                 }}
-                />
-                
+              />
             </FormControl>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="secondary">
               Cancel
             </Button>
-            <Button 
-            value={this.props.plant.plantId}
-            onClick= {this.handleSubmit} color="primary">
+            <Button
+              value={this.state.plantId}
+              onClick={(e) => {
+                this.handleSubmit(this.state.plantId);
+              }}
+            >
               Submit Changes
             </Button>
+            <Button onClick={this.handleDelete}>delete plant</Button>
           </DialogActions>
         </Dialog>
       </div>
@@ -218,4 +229,3 @@ handleClose = () => {
   }
 }
 export default PlantEdit;
-
