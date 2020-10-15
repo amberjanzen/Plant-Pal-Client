@@ -10,13 +10,16 @@ interface LoginState {
 }
 type LoginFormProps = {
   updateToken: (token: string, authenticated: boolean) => void;
+  updateAdmin: (admin: boolean)=>void,
 };
 type submitState = {
   loggedIn: boolean;
+  admin: boolean;
 };
 export class UserLogin extends Component<LoginFormProps, submitState> {
   state = {
     loggedIn: false,
+    admin: false,
   };
   LoginSubmit(values: LoginState, loginProps: LoginFormProps) {
     fetch(`${APIURL}/user/login`, {
@@ -35,7 +38,9 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
         if (!data.error) {
           window.localStorage.setItem("token", data.sessionToken);
           loginProps.updateToken(data.sessionToken, true);
-          this.setState({ loggedIn: true });
+          loginProps.updateAdmin(data.admin ? true: false)
+          this.setState({ loggedIn: true, admin: data.admin ? true: false });
+          this.setState({admin: data.admin})
         } else {
           alert(`error`);
         }

@@ -5,8 +5,9 @@ import { Container, Grid } from '@material-ui/core'
 
 
 interface userProps {
-    updateToken: (token:string, authenticated: boolean) => void
-    sessionData: { authenticated: boolean, token: string | null }
+    updateToken: (token: string, authenticated: boolean) => void;
+    sessionData: { authenticated: boolean; token: string | null};
+  
  }
 
 
@@ -16,7 +17,8 @@ type UserState = {
         lastName: string,
         email: string,
         password: string,
-        createdAt: string
+        createdAt: string,
+        admin: boolean,
     }
 }
 type UserResults = {
@@ -26,6 +28,7 @@ type UserResults = {
     firstName: string,
     lastName: string,
     createdAt: string
+    admin: boolean,
 
 }
 class UserTable extends Component<userProps, UserState> {
@@ -37,7 +40,8 @@ class UserTable extends Component<userProps, UserState> {
                 lastName: '',
                 email: '',
                 password: '',
-                createdAt: ''
+                createdAt: '',
+                admin: false,
             }
         }
     }
@@ -60,7 +64,8 @@ class UserTable extends Component<userProps, UserState> {
                         lastName: data.lastName,
                         email: data.email,
                         password: data.password,
-                        createdAt: data.createdAt
+                        createdAt: data.createdAt,
+                        admin: data.admin,
                     }
                 })
             })

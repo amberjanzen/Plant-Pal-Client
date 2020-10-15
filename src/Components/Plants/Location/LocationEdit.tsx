@@ -20,7 +20,7 @@ interface locationInv {
 
 
 type EditLocationProps = {
-  sessionData: { authenticated: boolean; token: string | null };
+  sessionData: { authenticated: boolean, token: string | null },
   location: locationInv
 };
 
@@ -120,7 +120,7 @@ handleClose = () => {
                 if (response.ok === true) {
                     console.log(`Destination with the id ${this.props.location.locationId} deleted.`)
                     this.handleClose()
-                    // window.location.reload()
+                    window.location.reload()
                 } else {
                     console.log('Destination not deleted.')
                 }

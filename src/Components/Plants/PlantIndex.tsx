@@ -7,7 +7,7 @@ import PlantCreate from "./Plant/PlantCreate";
 import PlantTable from "./Plant/PlantTable";
 
 type PlantIndexProps = {
-  sessionData: { authenticated: boolean; token: string | null };
+  sessionData: { authenticated: boolean, token: string | null},
 
 };
 const useStyles = makeStyles((theme) => ({

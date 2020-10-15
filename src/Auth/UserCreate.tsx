@@ -10,8 +10,9 @@ import APIURL from "../../src/helpers/environment";
 const Regex = RegExp(/^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i);
 
 interface UserCreateProps {
-    sessionData: { authenticated: boolean; token: string | null };
-    updateToken: (token: string, authenticated: boolean) => void
+    updateToken: (token: string, authenticated: boolean) => void;
+    sessionData: { authenticated: boolean; token: string | null};
+  
  }
  export interface UserCreateState {
     firstName : string,

@@ -15,24 +15,25 @@ import PlantEdit from "../Plant/PlantEdit";
 import APIURL from "../../../helpers/environment";
 
 interface plantProps {
-    sessionData: { authenticated: boolean, token: string | null},
+  sessionData: { authenticated: boolean, token: string | null },
   }
 
   interface editPlantProps {
-    sessionData: { authenticated: boolean, token: string | null},
-    plant: plantInv;
- 
+    sessionData: { authenticated: boolean, token: string | null },
+    plant: plantInv
   }
 
 
 interface plantInv {
+    id: 0;
     plantName: string;
     plantType: string;
     sunRequirement: string;
     waterNeeds: string;
     plantCare: string;
-    locationId: number, 
-    plantId: number, 
+    locationId: number,
+    plantId: number,
+    locationName: string,
   }
 
 
@@ -54,9 +55,11 @@ interface plantInv {
 class Plant extends Component<plantProps, plantState> {
     constructor(props: editPlantProps) {
         super(props);
+        console.log(props);
         this.state = {
-            plantData: []
-        }
+            plantData: [],
+
+        };
       }
 
     headers: any = {
@@ -73,7 +76,7 @@ class Plant extends Component<plantProps, plantState> {
     itemsFetch = ()  => {
         fetch(` ${APIURL}/plant/myplants`, {
             method: 'GET',
-            headers: this.headers
+            headers: new Headers(this.headers),
         })
             .then(res => res.json())
             .then((data) => {
@@ -83,12 +86,13 @@ class Plant extends Component<plantProps, plantState> {
 
             .catch(err => console.log(err))
     }
-    locationInvMap = () => {
+    plantInvMap = () => {
         console.log(this.state.plantData);
         return this.state.plantData.map((plant: plantInv, index) => {
           return (
             <TableRow key={index}>
-            <TableCell component="th" scope="row"> {plant.locationId} </TableCell>
+            <TableCell component="th" scope="row"> {plant.plantId} </TableCell>
+            <TableCell align="right">{plant.locationId}</TableCell>
             <TableCell align="right">{plant.plantName}</TableCell>
             <TableCell align="right">{plant.plantType}</TableCell>
             <TableCell align="right">{plant.sunRequirement}</TableCell>
@@ -119,12 +123,8 @@ class Plant extends Component<plantProps, plantState> {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                {this.locationInvMap()}
-                
-                
-               
+                {this.plantInvMap()}
                 </TableBody>
-       
             </Table>
         </TableContainer>
             </div>

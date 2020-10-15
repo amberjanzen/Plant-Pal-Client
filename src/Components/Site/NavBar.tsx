@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
 import Home from "./Home";
 import Auth from "../../Auth/Auth";
 import UserTable from "../../Auth/userTable/UserTable";
@@ -12,9 +12,8 @@ import "../../StyleCSS/header.css";
 type navState = {};
 type NavProps = {
   updateToken: (token: string, authenticated: boolean) => void;
-  sessionData: { authenticated: boolean; token: string | null };
-
-  
+  sessionData: { authenticated: boolean; token: string | null};
+  updateAdmin: (admin: boolean) => void,
 };
 
 class NavBar extends Component<NavProps, navState> {
@@ -22,8 +21,13 @@ class NavBar extends Component<NavProps, navState> {
     super(props);
   }
 
+
+  
+
+
   render() {
     // const [open, setOpen] = useState(false);
+
 
     return (
       <div className="navbar">
@@ -42,12 +46,15 @@ class NavBar extends Component<NavProps, navState> {
             <li>
               <Link to="/Resources">Resources</Link>
             </li>
+            <li>
+              <Link to="/AdminPortal">Admin Portal</Link>
+            </li>
           </ul>
           <i className="fas fa-bars burger"></i>
           {/* <i onClick={()=> setOpen(!open)} className="fas fa-bars burger"></i> */}
         </nav>
 
-        <div className="navbar-route">
+        {/* <div className="navbar-route">
           <Switch>
             <Route exact path="/auth">
               <Auth
@@ -65,7 +72,7 @@ class NavBar extends Component<NavProps, navState> {
               <Resources />
             </Route>
           </Switch>
-        </div>
+        </div> */}
       </div>
     );
   }

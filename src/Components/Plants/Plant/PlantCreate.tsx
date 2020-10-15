@@ -31,8 +31,9 @@ interface createPlant {
   open: boolean;
 }
 type NewPlantProps = {
-  sessionData: { authenticated: boolean; token: string | null };
+  sessionData: { authenticated: boolean, token: string | null},
   location: locationInv
+
 };
 interface locationInv {
   locationId: number;

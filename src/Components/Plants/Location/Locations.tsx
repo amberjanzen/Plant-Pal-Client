@@ -24,12 +24,12 @@ import APIURL from "../../../helpers/environment";
 
 
 interface locationProps {
-  sessionData: { authenticated: boolean, token: string | null},
+  sessionData: { authenticated: boolean, token: string | null },
   location: locationInv;
 }
 
 type getLocationProps = {
-  sessionData: { authenticated: boolean, token: string | null },
+  sessionData: { authenticated: boolean, token: string | null},
 
 }
 // interface Iheaders ={
@@ -110,7 +110,7 @@ locationInvMap = () => {
             
             </Button>
             <Button type="submit" variant="contained" color="primary">
-            <PlantCreate sessionData={this.props.sessionData} location={location}/>
+            <PlantCreate sessionData={this.props.sessionData} location={location} />
           
             
             </Button>

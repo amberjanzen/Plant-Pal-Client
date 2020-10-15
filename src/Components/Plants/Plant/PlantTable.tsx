@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import PlantEdit from "./PlantEdit";
 import PlantCreate from "./PlantCreate";
-import PlantInventory from "./PlantInventory";
+
 import Plants from "../Location/Plants";
 
 type PlantIndexProps = {
-    sessionData: { authenticated: boolean; token: string | null },
+    sessionData: { authenticated: boolean, token: string | null},
 }
 
 

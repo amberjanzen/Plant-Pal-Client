@@ -5,7 +5,8 @@ import { Redirect } from "react-router-dom";
 import APIURL from "../../../src/helpers/environment";
 
 interface userProps {
-  sessionData: { authenticated: boolean; token: string | null };
+sessionData: { authenticated: boolean; token: string | null};
+
 }
 interface User {
   firstName: string;

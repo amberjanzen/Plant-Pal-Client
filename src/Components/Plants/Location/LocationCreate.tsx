@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
-import Locations from "./Locations";
-import PlantInventory from "../Plant/PlantInventory";
+// import Locations from "./Locations";
+// import PlantInventory from "../Plant/PlantInventory";
 import { Grid, withStyles } from '@material-ui/core';
 
 
@@ -15,7 +15,7 @@ import { Grid, withStyles } from '@material-ui/core';
 //create location- then create plant (map over)
 
 type NewLocationProps = {
-  sessionData: { authenticated: boolean, token: string | null };
+  sessionData: { authenticated: boolean, token: string | null},
 
 }
 export interface createLocation {
