@@ -139,9 +139,9 @@ handleClose = () => {
     // {const handleSubmit={this.handleSubmit}}
     return (
       <div>
-        <Button color="secondary" onClick={this.handleClickOpen}>
-          <EditOutlined />
-        </Button>
+        <button onClick={this.handleClickOpen}>
+          Edit location
+        </button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -185,18 +185,18 @@ handleClose = () => {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="secondary">
+            <Button onClick={this.handleClose} >
               Cancel
             </Button>
             <Button 
             value={this.state.locationId}
             onClick= {(e) =>{
               this.handleSubmit(this.state.locationId) 
-            }} color="primary">
+            }} >
               Submit Changes
             </Button>
             <Button 
-            onClick= {this.handleDelete} color="primary">
+            onClick= {this.handleDelete} >
               delete location
             </Button>
           </DialogActions>

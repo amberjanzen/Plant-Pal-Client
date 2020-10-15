@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React, { Component } from "react";
-import { FormControl, TextField, Button } from "@material-ui/core";
+import { FormControl, TextField, Button,  Container} from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,17 +10,28 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
 import PlantEdit from "../Plant/PlantEdit";
+import { makeStyles, createStyles, Theme  } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+
 // import LocationEdit from "./LocationEdit";
 // import PlantCreate from "../Plant/PlantCreate";
 import APIURL from "../../../helpers/environment";
+import plant from "../../../Assets/plant.png";
 
 interface plantProps {
   sessionData: { authenticated: boolean, token: string | null },
+
   }
 
   interface editPlantProps {
     sessionData: { authenticated: boolean, token: string | null },
-    plant: plantInv
+    plant: plantInv,
+    location: locationInv,
   }
 
 
@@ -35,14 +46,20 @@ interface plantInv {
     plantId: number,
     locationName: string,
   }
-
-
-//   interface Plant {
-//     plant: plantInv;
-//   }
-  export interface plantState {
-  plantData: plantInv[],
-
+  interface locationInv {
+    locationId: number;
+    locationName: string;
+    locationDescription: string;
+    sunExposure: string;
+  }
+  
+  //   interface Plant {
+    //     plant: plantInv;
+    //   }
+    export interface plantState {
+      plantData: plantInv[],
+      locationData: locationInv[];
+      
 
   }
 
@@ -52,12 +69,26 @@ interface plantInv {
     },
   };
 
+  const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }),
+);
+
 class Plant extends Component<plantProps, plantState> {
     constructor(props: editPlantProps) {
         super(props);
         console.log(props);
         this.state = {
             plantData: [],
+            locationData: [],
 
         };
       }
@@ -91,12 +122,10 @@ class Plant extends Component<plantProps, plantState> {
         return this.state.plantData.map((plant: plantInv, index) => {
           return (
             <TableRow key={index}>
-            <TableCell component="th" scope="row"> {plant.plantId} </TableCell>
-            <TableCell align="right">{plant.locationId}</TableCell>
             <TableCell align="right">{plant.plantName}</TableCell>
             <TableCell align="right">{plant.plantType}</TableCell>
             <TableCell align="right">{plant.sunRequirement}</TableCell>
-            <TableCell align="right">{plant.waterNeeds}</TableCell>
+            <TableCell align="right">{plant.plantType}</TableCell>
             <TableCell align="right">{plant.plantCare}</TableCell> 
             <Button type="submit" variant="contained" color="primary">
             <PlantEdit sessionData={this.props.sessionData} plant={plant}/> 
@@ -105,28 +134,73 @@ class Plant extends Component<plantProps, plantState> {
           );
         });
       };
+
+      plantInvMapTest = () => {
+        console.log(this.state.plantData);
+        return this.state.plantData.map((plant: plantInv, index) => {
+          return (
+            <div>
+
+            <Card>
+            <CardActionArea key = {index}>
+            <CardMedia>
+              
+            </CardMedia>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+               {plant.plantName}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+              {plant.plantType}
+              <br />
+              {plant.sunRequirement}
+              <br />
+              {plant.waterNeeds}
+              <br />
+              {plant.plantCare}
+              </Typography>
+            </CardContent>
+            <CardActions>
+            {/* <button size="small" color="primary">
+              Share
+            </Button>
+            <Button size="small" color="primary">
+              Learn More
+            </Button> */}
+            <button type="submit">
+            <PlantEdit sessionData={this.props.sessionData} plant={plant}/> 
+            </button>  
+          </CardActions>
+          </CardActionArea>
+          </Card>
+          <br />
+            </div>
+
+
+          );
+        });
+      };
       
     render() {
 
         return (
             <div>
-                 <h3>plant table</h3>
-        <TableContainer component={Paper}>
-            <Table style={styles.table} aria-label='simple table'>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align='right'>Plant Name</TableCell>
-                        <TableCell align='right'>Plant Type</TableCell>
-                        <TableCell align='right'>Sun Requirement </TableCell>
-                        <TableCell align='right'>water needs </TableCell> 
-                        <TableCell align='right'>plant care </TableCell>                              
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                {this.plantInvMap()}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                 <Container>
+                 <h2>My Plants</h2>
+               <Grid container spacing={9}>
+               <Grid item xs={4}>
+               {/* <CardMedia>
+              <img src= {plant}/>
+            </CardMedia> */}
+
+            {this.plantInvMapTest()}
+                </Grid>
+               </Grid>
+
+
+
+        {/* {this.plantInvMapTest()} */}
+                 </Container>
             </div>
         )
     }

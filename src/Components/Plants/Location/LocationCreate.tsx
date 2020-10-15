@@ -23,6 +23,7 @@ export interface createLocation {
     locationName: string,
     locationDescription: string,
     sunExposure: string,
+    
 }
 
 // export interface LocationFormState {
@@ -95,7 +96,7 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
 
     return (
         <div className="createTable">
-        <h1> Add Location</h1>
+        <h3> Add Location</h3>
         <FormControl>
           <TextField
             label="Location"
@@ -123,14 +124,16 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
               this.setState({ sunExposure: e.target.value });
             }}
           />
-          <Button
-            variant="contained"
+          <button
+       
             onClick={(e) => {
               this.handleSubmit(e);
+              
             }}
+            
           >
-            Add Location
-          </Button>
+             Add Plant Location
+          </button>
         </FormControl>
       </div>
     )

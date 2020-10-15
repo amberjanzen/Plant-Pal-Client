@@ -43,9 +43,9 @@ class NavBar extends Component<NavProps, navState> {
             <li>
               <Link to="/PlantIndex">PlantIndex</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/Resources">Resources</Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/AdminPortal">Admin Portal</Link>
             </li>

@@ -1,21 +1,18 @@
-import { Paper, TableContainer, Button, Table, TableHead, TableCell, TableBody, TableRow, Card, CardContent } from "@material-ui/core";
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { Paper, TableContainer, Button, Table, TableHead, TableCell, TableBody, TableRow, Card, CardContent, Container } from "@material-ui/core";
 import React, { Component } from "react";
 import {Redirect} from 'react-router-dom'
 import APIURL from '../../helpers/environment'
-// import requestHeaders from "../RequestHeaders";
-// import AdminUpdate from './AdminUpdate'
+import AdminLocation from "./AdminLocation";
 
-
-type AdminProps = {
+type AdminUserProps = {
     sessionData: { authenticated: boolean, token: string | null, admin: boolean},
   };
 
 
 type AdminState = {
-    users: usersData[]
+    users: userData[]
 }
-type usersData = {
+type userData = {
     firstName: string,
     lastName: string,
     email: string,
@@ -32,8 +29,8 @@ const styles = {
   };
 
 
-class AdminPortal extends Component<AdminProps, AdminState> {
-    constructor(props: AdminProps) {
+class AdminPortal extends Component<AdminUserProps, AdminState> {
+    constructor(props: AdminUserProps) {
         super(props)
         this.state = {
             users: []
@@ -57,7 +54,7 @@ class AdminPortal extends Component<AdminProps, AdminState> {
             })
         }
     }
-    deleteUser (user:usersData) {
+    deleteUser (user: userData) {
         fetch(`${APIURL}/admin/users/${user.id}`, {
             method: 'DELETE',
             headers: this.headers
@@ -82,13 +79,10 @@ class AdminPortal extends Component<AdminProps, AdminState> {
             <TableCell align="right">{user.lastName}</TableCell>
             <TableCell align="right">{user.email}</TableCell>
             <TableCell align="right">{user.password}</TableCell>
-            <TableCell align="right">{user.password}</TableCell>
-                  <Button type="submit" variant="contained" color="primary">
-
+                  {/* <Button type="submit" variant="contained" color="primary">
                   </Button>
                   <Button type="submit" variant="contained" color="primary">
-
-                  </Button>
+                  </Button> */}
 
             </TableRow>
           );
@@ -100,8 +94,7 @@ class AdminPortal extends Component<AdminProps, AdminState> {
         // }; /// ugh wont work
 
         return (
-            <div>
-
+            <Container>
                 <h3>Users</h3>
             <TableContainer component={Paper}>
             <Table style={styles.table} aria-label='simple table'>
@@ -119,7 +112,10 @@ class AdminPortal extends Component<AdminProps, AdminState> {
                 </TableBody>
             </Table>
         </TableContainer>
-            </div>
+            </Container>
+
+      
+                
         )
     }
 }

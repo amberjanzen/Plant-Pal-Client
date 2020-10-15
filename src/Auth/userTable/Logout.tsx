@@ -42,7 +42,10 @@ class Logout extends Component<userLogoutProps, submitState> {
     return (
       <div>
           {(this.state.loggedOut === true) ? <Redirect to='/Auth' /> : null}
-        <Button onClick={this.removeToken}>Logout</Button>
+        <Button 
+        variant ="contained"
+        color ="default"
+        onClick={this.removeToken}>Logout</Button>
       </div>
     );
   }

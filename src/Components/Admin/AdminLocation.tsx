@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import LocationEdit from "./LocationEdit";
-import PlantCreate from "../Plant/PlantCreate";
-import Plants from "./Plants";
+// import LocationEdit from "./LocationEdit";
+// import PlantCreate from "../Plant/PlantCreate";
+// import Plants from "./Plants";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -12,19 +12,23 @@ import { Grid, Container } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 // import Radium from 'radium';
 import { Link } from "react-router-dom";
-import APIURL from "../../../helpers/environment";
+import APIURL from "../../helpers/environment";
 
 // does not fetch
 // need to query Userid?
 
-interface locationProps {
+interface adminLocProps {
   sessionData: { authenticated: boolean; token: string | null };
-  location: locationInv;
-}
 
-type getLocationProps = {
-  sessionData: { authenticated: boolean; token: string | null };
-};
+}
+interface locationProps {
+    sessionData: { authenticated: boolean; token: string | null };
+    location: locationInv;
+  }
+
+// type getLocationProps = {
+//   sessionData: { authenticated: boolean; token: string | null };
+// };
 // interface Iheaders ={
 //     Content-Type: string,
 //     Authorization: string,
@@ -48,7 +52,7 @@ const styles = {
   },
 };
 
-class Locations extends React.Component<getLocationProps, locationState> {
+class AdminLocation extends React.Component<adminLocProps, locationState> {
   constructor(props: locationProps) {
     super(props);
     console.log(props);
@@ -68,7 +72,7 @@ class Locations extends React.Component<getLocationProps, locationState> {
   componentDidUpdate() {}
 
   fetchLocations = () => {
-    fetch(`${APIURL}/location`, {
+    fetch(`${APIURL}/location/admin/all`, {
       method: "GET",
       headers: new Headers(this.headers),
     })
@@ -98,7 +102,7 @@ class Locations extends React.Component<getLocationProps, locationState> {
               <Typography>{location.locationDescription}</Typography>
               <Typography>{location.sunExposure}</Typography>
             </AccordionDetails>
-            <div>
+            {/* <div>
               <LocationEdit
                 sessionData={this.props.sessionData}
                 location={location}
@@ -109,7 +113,7 @@ class Locations extends React.Component<getLocationProps, locationState> {
                 location={location}
               />
               <br />
-            </div>
+            </div> */}
           </Accordion>
           <br />
         </div>
@@ -117,50 +121,15 @@ class Locations extends React.Component<getLocationProps, locationState> {
     });
   };
 
-  // locationInvMap = () => {
-  //   console.log(this.state.locationData);
-  //   return this.state.locationData.map((location: locationInv, index) => {
-  //     return (
-  //       <TableRow key={index}>
-  //       {/* <TableCell component="th" scope="row"> {location.locationId} </TableCell> */}
-  //       <TableCell align="right">{location.locationName}</TableCell>
-  //       <TableCell align="right">{location.locationDescription}</TableCell>
-  //       <TableCell align="right">{location.sunExposure}</TableCell>
-  //             <Button type="submit" variant="contained" color="primary">
-  //             <LocationEdit sessionData={this.props.sessionData} location={location}/>
-  //             </Button>
-  //             <Button type="submit" variant="contained" color="primary">
-  //             <PlantCreate sessionData={this.props.sessionData} location={location} />
-  //             </Button>
 
-  //       </TableRow>
-  //     );
-  //   });
-  // };
 
   render() {
     return (
       <Container>
-        <h2>Plant Locations</h2>
         {this.locationInvMapTest()}
-        {/* <h3>Location Table</h3>
-        <TableContainer component={Paper}>
-            <Table style={styles.table} aria-label='simple table'>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align='right'>Location Name</TableCell>
-                        <TableCell align='right'>location Description</TableCell>
-                        <TableCell align='right'>Lighting </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                {this.locationInvMap()}
-                </TableBody>
-            </Table>
-        </TableContainer> */}
       </Container>
     );
   }
 }
 
-export default Locations;
+export default AdminLocation;
