@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormControl, TextField, Button } from "@material-ui/core";
-import Locations from "./Locations";
-import PlantInventory from "../Plant/PlantInventory";
+// import Locations from "./Locations";
+// import PlantInventory from "../Plant/PlantInventory";
 import { Grid, withStyles } from '@material-ui/core';
 
 
@@ -15,7 +15,7 @@ import { Grid, withStyles } from '@material-ui/core';
 //create location- then create plant (map over)
 
 type NewLocationProps = {
-  sessionData: { authenticated: boolean, token: string | null };
+  sessionData: { authenticated: boolean, token: string | null},
 
 }
 export interface createLocation {
@@ -23,6 +23,7 @@ export interface createLocation {
     locationName: string,
     locationDescription: string,
     sunExposure: string,
+    
 }
 
 // export interface LocationFormState {
@@ -95,7 +96,7 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
 
     return (
         <div className="createTable">
-        <h1> Add Location</h1>
+        <h3> Add Location</h3>
         <FormControl>
           <TextField
             label="Location"
@@ -123,14 +124,16 @@ class LocationCreate extends Component<NewLocationProps, createLocation> {
               this.setState({ sunExposure: e.target.value });
             }}
           />
-          <Button
-            variant="contained"
+          <button
+       
             onClick={(e) => {
               this.handleSubmit(e);
+              
             }}
+            
           >
-            Add Location
-          </Button>
+             Add Plant Location
+          </button>
         </FormControl>
       </div>
     )

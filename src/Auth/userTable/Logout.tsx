@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 
 
 interface userLogoutProps {
-  updateToken: (token:string, authenticated: boolean) => void
+  updateToken: (token: string, authenticated: boolean, admin: boolean) => void;
 }
 type submitState = {
   loggedOut: boolean;
@@ -21,7 +21,7 @@ class Logout extends Component<userLogoutProps, submitState> {
   
   removeToken = (): void => {
     window.localStorage.removeItem("token");
-    this.props.updateToken("", false);
+    this.props.updateToken("", false, false);
     this.setState({ loggedOut: true })
   };
   componentDidMount() {
@@ -42,7 +42,10 @@ class Logout extends Component<userLogoutProps, submitState> {
     return (
       <div>
           {(this.state.loggedOut === true) ? <Redirect to='/Auth' /> : null}
-        <Button onClick={this.removeToken}>Logout</Button>
+        <Button 
+        variant ="contained"
+        color ="default"
+        onClick={this.removeToken}>Logout</Button>
       </div>
     );
   }

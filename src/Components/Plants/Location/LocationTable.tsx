@@ -1,8 +1,8 @@
 
 import React, {Component} from "react";
 // import LocationEdit from "./LocationEdit"
-import LocationCreate from "./LocationCreate"
-import Locations from "./Locations"
+import LocationCreate from "./LocationCreate";
+import Locations from "./Locations";
 import Grid from "@material-ui/core/Grid";
 
 
