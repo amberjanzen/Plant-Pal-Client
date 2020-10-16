@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+//placeholder table - eventually use as plantcare/tips blog
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,

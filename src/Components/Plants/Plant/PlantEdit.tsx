@@ -21,8 +21,8 @@ interface plantInv {
 }
 
 type EditPlantProps = {
-  sessionData: { authenticated: boolean; token: string | null };
-  plant: plantInv;
+  sessionData: { authenticated: boolean; token: string | null },
+  plant: plantInv
 };
 
 type plantEditState = {
@@ -69,7 +69,7 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
 
   headers: any = {
     "Content-Type": "application/json",
-    Authorization: this.props.sessionData.token,
+    'Authorization': this.props.sessionData.token,
   };
 
   submitClick = (plantId: number) => {
@@ -79,14 +79,14 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
   };
 
   componentDidMount() {
-    this.setState(this.props.plant);
+    this.setState(this.props.plant)
   }
 
   handleSubmit = (plantId: number) => {
     if (this.props.sessionData !== undefined) {
-      fetch(`http://localhost:4000/plant/update/${plantId}`, {
+      fetch(`${APIURL}/plant/update/${plantId}`, {
         method: "PUT",
-        headers: this.headers,
+        headers: new Headers(this.headers),
         body: JSON.stringify({
           plant: {
             // plantId: this.state.plantId,
@@ -100,10 +100,10 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
       })
         .then((response) => {
           if (response.ok === true) {
-            this.setState({ submitted: true });
-            return response.json().then((plantId) => {
+            // this.setState({ submitted: true });
+            return response.json().then(id=> {
               console.log(`plant updated.`);
-              console.log("updatedData:", plantId);
+              console.log("updatedData:", id);
               this.handleClose();
               window.location.reload();
             });
@@ -117,7 +117,7 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
     }
   };
 
-  handleDelete = (): any => {
+  handleDelete = ():any => {
     if (this.props.sessionData !== undefined) {
       fetch(`${APIURL}/plant/${this.props.plant.plantId}`, {
         method: "DELETE",
@@ -127,12 +127,12 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
           console.log(response.ok);
           if (response.ok === true) {
             console.log(
-              `Destination with the id ${this.props.plant.plantId} deleted.`
+              `plant ${this.props.plant.plantId} deleted.`
             );
             this.handleClose();
             window.location.reload();
           } else {
-            console.log("Destination not deleted.");
+            console.log("plant not deleted.");
           }
         })
         .catch((error: Error) => console.log(error));
@@ -150,7 +150,7 @@ class PlantEdit extends Component<EditPlantProps, plantEditState> {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">update location</DialogTitle>
+          <DialogTitle id="form-dialog-title">update plant</DialogTitle>
           <DialogContent>
             <FormControl>
               <TextField

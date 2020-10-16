@@ -1,33 +1,26 @@
-import React, {Component} from "react";
-import PlantEdit from "./PlantEdit";
-import PlantCreate from "./PlantCreate";
+import React, { Component } from "react";
 
 import Plants from "../Location/Plants";
 
+
+//may delete table and migrate Plants component to plantindex.
+
 type PlantIndexProps = {
-    sessionData: { authenticated: boolean, token: string | null},
-}
-
-
+  sessionData: { authenticated: boolean; token: string | null };
+};
 
 class PlantTable extends Component<PlantIndexProps> {
-    constructor(props: PlantIndexProps){
-    super(props)
+  constructor(props: PlantIndexProps) {
+    super(props);
     console.log(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <Plants sessionData={this.props.sessionData} />
+      </div>
+    );
+  }
 }
-
-    render(){
-        return(
-            <div>
-
-                <Plants  sessionData={this.props.sessionData} />
-                
-
-                {/* <PlantInventory ={this.props}/> */}
-                {/* <PlantInventory sessionData={this.props.sessionData}/> */}
-                {/* <PlantCreate sessionData={this.props.sessionData} /> */}
-            </div>
-        )
-    }
-}
-export default PlantTable
+export default PlantTable;

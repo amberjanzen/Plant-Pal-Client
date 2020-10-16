@@ -1,38 +1,26 @@
-import React, { Component } from "react";
-// import LocationEdit from "./LocationEdit";
-// import PlantCreate from "../Plant/PlantCreate";
-// import Plants from "./Plants";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import React from "react";
+
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Grid, Container } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-// import Radium from 'radium';
-import { Link } from "react-router-dom";
+import { Container } from "@material-ui/core";
+
+import AdminDel from "../Admin/AdminDel";
 import APIURL from "../../helpers/environment";
 
-// does not fetch
-// need to query Userid?
+// if admin - fetches & deletes any user location. //
 
 interface adminLocProps {
   sessionData: { authenticated: boolean; token: string | null };
-
 }
-interface locationProps {
-    sessionData: { authenticated: boolean; token: string | null };
-    location: locationInv;
-  }
 
-// type getLocationProps = {
-//   sessionData: { authenticated: boolean; token: string | null };
-// };
-// interface Iheaders ={
-//     Content-Type: string,
-//     Authorization: string,
-// }
+interface locationProps {
+  sessionData: { authenticated: boolean; token: string | null };
+  location: locationInv;
+}
+
 interface locationInv {
   locationId: number;
   locationName: string;
@@ -40,17 +28,9 @@ interface locationInv {
   sunExposure: string;
 }
 
-interface Location {
-  location: locationInv;
-}
 export interface locationState {
   locationData: locationInv[];
 }
-const styles = {
-  table: {
-    minWidth: 650,
-  },
-};
 
 class AdminLocation extends React.Component<adminLocProps, locationState> {
   constructor(props: locationProps) {
@@ -60,7 +40,6 @@ class AdminLocation extends React.Component<adminLocProps, locationState> {
       locationData: [],
     };
   }
-
   headers: any = {
     "Content-Type": "application/json",
     Authorization: this.props.sessionData.token,
@@ -69,7 +48,7 @@ class AdminLocation extends React.Component<adminLocProps, locationState> {
   componentDidMount() {
     this.fetchLocations();
   }
-  componentDidUpdate() {}
+  // componentDidUpdate() {}
 
   fetchLocations = () => {
     fetch(`${APIURL}/location/admin/all`, {
@@ -82,9 +61,7 @@ class AdminLocation extends React.Component<adminLocProps, locationState> {
         this.setState({ locationData: data.data });
       })
       .catch((err) => console.log(err));
-    // .catch((err) => console.log(err));
   };
-
   locationInvMapTest = () => {
     console.log(this.state.locationData);
     return this.state.locationData.map((location: locationInv, index) => {
@@ -102,18 +79,12 @@ class AdminLocation extends React.Component<adminLocProps, locationState> {
               <Typography>{location.locationDescription}</Typography>
               <Typography>{location.sunExposure}</Typography>
             </AccordionDetails>
-            {/* <div>
-              <LocationEdit
+            <div>
+              <AdminDel
                 sessionData={this.props.sessionData}
                 location={location}
               />
-
-              <PlantCreate
-                sessionData={this.props.sessionData}
-                location={location}
-              />
-              <br />
-            </div> */}
+            </div>
           </Accordion>
           <br />
         </div>
@@ -121,14 +92,8 @@ class AdminLocation extends React.Component<adminLocProps, locationState> {
     });
   };
 
-
-
   render() {
-    return (
-      <Container>
-        {this.locationInvMapTest()}
-      </Container>
-    );
+    return <Container>{this.locationInvMapTest()}</Container>;
   }
 }
 

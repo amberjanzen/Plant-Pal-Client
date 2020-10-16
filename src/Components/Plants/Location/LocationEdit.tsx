@@ -1,15 +1,16 @@
 import React, { Component } from "react";
+
 import { FormControl, TextField, Button } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { EditOutlined } from "@material-ui/icons";
+
 import APIURL from "../../../helpers/environment";
 
-//update location modal onclick
-// map over location array?
+//update and delete locations
 
 interface locationInv {
   locationId: number;
@@ -47,7 +48,7 @@ class LocationEdit extends Component<EditLocationProps, LocationEditState> {
       locationData: [],
       submitted: false,
     };
-    // this.handleChange = this.handleChange.bind(this);
+ 
   }
 
 
@@ -118,25 +119,23 @@ handleClose = () => {
             .then(response => {
                 console.log(response.ok)
                 if (response.ok === true) {
-                    console.log(`Destination with the id ${this.props.location.locationId} deleted.`)
+                    console.log(`location deleted.`)
                     this.handleClose()
                     window.location.reload()
                 } else {
-                    console.log('Destination not deleted.')
+                    console.log('could not delete location.')
                 }
             })
             .catch((error: Error) => console.log(error))
     }
 }
 
-  // handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   this.setState({ type: event.target.value });
-  // };
+
 
   
   
   render() {
-    // {const handleSubmit={this.handleSubmit}}
+
     return (
       <div>
         <button onClick={this.handleClickOpen}>
