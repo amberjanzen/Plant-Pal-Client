@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 
 
 interface userLogoutProps {
-  updateToken: (token: string, authenticated: boolean, admin: boolean) => void;
+  updateToken: (token: string, authenticated: boolean) => void;
 }
 type submitState = {
   loggedOut: boolean;
@@ -21,7 +21,7 @@ class Logout extends Component<userLogoutProps, submitState> {
   
   removeToken = (): void => {
     window.localStorage.removeItem("token");
-    this.props.updateToken("", false, false);
+    this.props.updateToken("", false);
     this.setState({ loggedOut: true })
   };
   componentDidMount() {

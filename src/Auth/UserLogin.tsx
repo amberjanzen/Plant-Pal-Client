@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+
+  Redirect,
+} from "react-router-dom";
 import "../StyleCSS/auth.css";
 import { Button, TextField } from "@material-ui/core";
 import {
@@ -88,7 +93,7 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
   render() {
     return (
       <div>
-        <div>
+    <div>
           <h3>Login</h3>
           <br />
         </div>
@@ -100,7 +105,7 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
           onSubmit={(values) => {
             this.LoginSubmit(values, this.props);
           }}
-        >
+          >
           {({ values, handleChange }) => (
             <Form>
               <div>
@@ -112,7 +117,7 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
                   type="email"
                   value={values.email}
                   onChange={handleChange}
-                />
+                  />
                 <br />
               </div>
               <div>
@@ -125,7 +130,7 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
                   type="password"
                   value={values.password}
                   onChange={handleChange}
-                />
+                  />
               </div>
               <div>
                 <br />
@@ -133,6 +138,9 @@ export class UserLogin extends Component<LoginFormProps, submitState> {
                 <button type="submit">
                   Login
                 </button>
+                  {(this.state.loggedIn === true) ?
+                    ((this.state.admin)?<Redirect to='/AdminPortal' />:<Redirect to='/PlantIndex' />)
+                    : null}
               </div>
             </Form>
           )}
