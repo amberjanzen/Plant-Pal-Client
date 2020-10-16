@@ -31,7 +31,7 @@ class App extends Component<{}, SessionData> {
       admin: false,
     };
     this.updateToken = this.updateToken.bind(this);
-    this.updateAdmin = this.updateAdmin.bind(this)
+    // this.updateAdmin = this.updateAdmin.bind(this)
     // this.protectedViews = this.protectedViews.bind(this);
   }
   updateToken(userToken: string, authenticated: boolean): void {
