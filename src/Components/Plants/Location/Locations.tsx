@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-import LocationEdit from "./LocationEdit";
-import PlantCreate from "../Plant/PlantCreate";
-import Plants from "./Plants";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import React from "react";
+
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Grid, Container } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-// import Radium from 'radium';
-import { Link } from "react-router-dom";
+import { Container } from "@material-ui/core";
+
+import LocationEdit from "./LocationEdit";
+import PlantCreate from "../Plant/PlantCreate";
 import APIURL from "../../../helpers/environment";
 
-// does not fetch
-// need to query Userid?
+//maps user location fetch with -render delete and update button components //
+
+// --- previous table map kept, but commented out for future ref //
 
 interface locationProps {
   sessionData: { authenticated: boolean; token: string | null };
@@ -25,10 +23,7 @@ interface locationProps {
 type getLocationProps = {
   sessionData: { authenticated: boolean; token: string | null };
 };
-// interface Iheaders ={
-//     Content-Type: string,
-//     Authorization: string,
-// }
+
 interface locationInv {
   locationId: number;
   locationName: string;
@@ -36,9 +31,6 @@ interface locationInv {
   sunExposure: string;
 }
 
-interface Location {
-  location: locationInv;
-}
 export interface locationState {
   locationData: locationInv[];
 }

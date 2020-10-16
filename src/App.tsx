@@ -1,7 +1,11 @@
-
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Header from "./Components/Site/Header";
 import Footer from "./Components/Site/Footer";
 import NavBar from "./Components/Site/NavBar";
@@ -11,16 +15,13 @@ import UserTable from "./Auth/userTable/UserTable";
 import Resources from "./Components/Site/Resources";
 import AdminPortal from "./Components/Admin/AdminPortal";
 
-
 type SessionData = {
   token: string | null;
   authenticated: boolean;
-  admin: boolean
- 
+  admin: boolean;
 };
 let sessionToken = localStorage.getItem("token");
 let validateSession = sessionToken ? true : false;
-
 
 class App extends Component<{}, SessionData> {
   constructor(props: {}) {
@@ -31,47 +32,39 @@ class App extends Component<{}, SessionData> {
       admin: false,
     };
     this.updateToken = this.updateToken.bind(this);
-    this.updateAdmin = this.updateAdmin.bind(this)
+    // this.updateAdmin = this.updateAdmin.bind(this)
     // this.protectedViews = this.protectedViews.bind(this);
   }
   updateToken(userToken: string, authenticated: boolean): void {
-    this.setState({ token: userToken, authenticated: authenticated});
-  //   localStorage.setItem("admin", JSON.stringify(newAdmin));
-	// 	this.setState({admin: newAdmin});
+    this.setState({ token: userToken, authenticated: authenticated });
   }
 
   updateAdmin = (admin: boolean) => {
-    this.setState({admin: admin});
+    this.setState({ admin: admin });
   };
-  
-
 
   protectedViews = () => {
-    return validateSession ?(
-      <Route exact path = "/">
-        <PlantIndex  sessionData={this.state}
-        />
+    return validateSession === true ? (
+      <Route exact path="/PlantIndex">
+        <PlantIndex sessionData={this.state} />
       </Route>
-      ) : (
-        <Route exact path = "/">
-          <Auth
+    ) : (
+      <Route exact path="/">
+        <Auth
           updateToken={this.updateToken}
           sessionData={this.state}
           updateAdmin={this.updateAdmin}
-           />
-        </Route>
-     )
+        />
+      </Route>
+    );
   };
 
   // protectedViewThree = () => {
   //   return this.state.setToken === localStorage.getItem("token") ? (
-  //       <Admin 
-
-
+  //       <Admin
   //       />
   //   ) : (
   //     <Auth
-     
 
   //     />
   //   )
@@ -80,7 +73,6 @@ class App extends Component<{}, SessionData> {
   //   this.updateToken("", false);
   //   window.localStorage.removeItem("token");
   // }
-  //   // console.log(sessionToken);
   // }
   //  clearToken =  () => {
   //   localStorage.clear();
@@ -88,25 +80,38 @@ class App extends Component<{}, SessionData> {
   //     sessionToken: ''
   //   })
   // }
-  
+
   // {this.protectedViews()}
-
-
-
   // const PrivateRoute =({ component: Component, ...rest}) =>(
   //   <Route {...rest} render={(props)=>(
-
   //   )}
+
+  // <Route exact path="/">
+  // {sessionToken === localStorage.getItem("token")  ?  <Redirect to="/mediaCreate" /> : <Auth updateToken={updateToken} />}
+  // </Route> 
+  // {protectedViews()}
+
   render() {
     return (
       <div className="App">
         <Header />
         <Router>
-          <NavBar updateToken={this.updateToken} sessionData={this.state} updateAdmin={this.updateAdmin}/>
-          <Route>
-          {this.protectedViews()}
-          </Route>
+          <NavBar
+            updateToken={this.updateToken}
+            sessionData={this.state}
+            updateAdmin={this.updateAdmin}
+          />
+          {/* <Route>{this.protectedViews()}</Route> */}
           <Switch>
+          <Route exact path="/">
+          {validateSession === true ?  <Redirect to="/PlantIndex" /> :
+           <Auth
+           updateToken={this.updateToken}
+           sessionData={this.state}
+           updateAdmin={this.updateAdmin}
+            />}
+          </Route>
+           {this.protectedViews()}
             <Route exact path="/auth">
               <Auth
                 updateToken={this.updateToken}
@@ -115,12 +120,13 @@ class App extends Component<{}, SessionData> {
               />
             </Route>
             <Route exact path="/AdminPortal">
-              <AdminPortal
-                sessionData={this.state}
-              />
+              <AdminPortal sessionData={this.state} />
             </Route>
             <Route exact path="/UserTable">
-              <UserTable updateToken={this.updateToken} sessionData={this.state} />
+              <UserTable
+                updateToken={this.updateToken}
+                sessionData={this.state}
+              />
             </Route>
             <Route exact path="/plantIndex">
               <PlantIndex sessionData={this.state} />
@@ -129,7 +135,6 @@ class App extends Component<{}, SessionData> {
               <Resources />
             </Route>
           </Switch>
-
         </Router>
         <Footer />
       </div>

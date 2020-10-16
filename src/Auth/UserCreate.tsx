@@ -19,6 +19,8 @@ export interface UserCreateState {
   lastName: string;
   email: string;
   password: string;
+  // submitSuccess: boolean;
+  validity: boolean;
   errors: {
     firstName: string;
     lastName: string;
@@ -30,13 +32,11 @@ export interface UserCreateState {
 export interface UserFormState {
   [key: string]: any;
   values: UserFormState[];
-  submitSuccess: Boolean;
+  // submitSuccess: Boolean;
   loading: boolean;
 }
 
-type stateValues = {
-  submitted: boolean;
-};
+
 
 export class UserCreate extends React.Component<
   UserCreateProps,
@@ -67,6 +67,7 @@ export class UserCreate extends React.Component<
       lastName: "",
       email: "",
       password: "",
+      validity: false,
       errors: {
         firstName: "",
         lastName: "",
@@ -155,6 +156,7 @@ export class UserCreate extends React.Component<
             <button>Sign up</button>
           </div>
         </form>
+        {(this.state.validity === true) ? <Redirect to='/PlantIndex' /> : null}
       </div>
     );
   }

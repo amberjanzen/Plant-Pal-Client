@@ -11,6 +11,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ImageIcon from '@material-ui/icons/Image';
 import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import APIURL from "../../../src/helpers/environment";
 
 interface userProps {
     updateToken: (token: string, authenticated: boolean) => void;
@@ -60,7 +61,7 @@ class UserTable extends Component<userProps, UserState> {
         this.getUser()
     }
     getUser() {
-        fetch(`http://localhost:4000/user/`, {
+        fetch(`${APIURL}/user/`, {
             method: 'GET',
             headers: this.headers
         })

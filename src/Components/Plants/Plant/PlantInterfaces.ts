@@ -1,3 +1,6 @@
+
+//not in use - transfer prop interfaces here at some point
+
 export interface PlantResults {
   plant: Plant
 
@@ -11,16 +14,3 @@ export interface Plant {
     plantCare: string;
 
 }
-
-//  export enum sunRequirement {
-//   FullSun = "Full Sun",
-//   Partial = "Partial Sun/Shade",
-//   FullShade = "Full Shade"
-// }
-
-
-
-//  export enum waterNeeds {
-//   Reg = "Regularly",
-//   Infreq = "Infrequently"
-// }

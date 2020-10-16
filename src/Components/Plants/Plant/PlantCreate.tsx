@@ -1,15 +1,18 @@
 import React, { Component } from "react";
-import { FormControl, TextField, Button } from "@material-ui/core";
+
+import { FormControl, TextField } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { EditOutlined } from "@material-ui/icons";
-import '../../../StyleCSS/auth.css';
 
-//sequelize database error "22P02"
+import APIURL from "../../../helpers/environment";
+import "../../../StyleCSS/auth.css";
 
+//Create new plants based off of locations- location props passed down from Locations//
+
+//create drop down options for enums
 // sunRequirement: {
 //   type: DataTypes.ENUM("Full Sun", "Partial Sun/Shade", "Full Shade"),
 //   allowNull: false,
@@ -18,9 +21,6 @@ import '../../../StyleCSS/auth.css';
 //   type: DataTypes.ENUM("Regularly", "Infrequently"),
 //   allowNull: false,
 // },
-//need to add enum in
-// connect to model
-//session token not working?
 
 interface createPlant {
   locationData: locationInv[];
@@ -32,9 +32,8 @@ interface createPlant {
   open: boolean;
 }
 type NewPlantProps = {
-  sessionData: { authenticated: boolean, token: string | null},
-  location: locationInv
-
+  sessionData: { authenticated: boolean; token: string | null };
+  location: locationInv;
 };
 interface locationInv {
   locationId: number;
@@ -42,7 +41,6 @@ interface locationInv {
   locationDescription: string;
   sunExposure: string;
 }
-
 
 class PlantCreate extends Component<NewPlantProps, createPlant> {
   constructor(props: NewPlantProps) {
@@ -59,21 +57,19 @@ class PlantCreate extends Component<NewPlantProps, createPlant> {
     this.handleChange = this.handleChange.bind(this);
   }
 
-    
-handleClickOpen = () => {
-  console.log(this.state)
-  this.setState({ open: true });
-};
-submitClick = (locationId: number) => {
-  this.handleClose();
-  this.handleSubmit(locationId);
-};
+  handleClickOpen = () => {
+    console.log(this.state);
+    this.setState({ open: true });
+  };
+  submitClick = (locationId: number) => {
+    this.handleClose();
+    this.handleSubmit(locationId);
+  };
 
-handleClose = () => {
-  this.setState({ open: false });
-};
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
-  
   componentDidUpdate() {
     console.log(this.state);
   }
@@ -84,14 +80,13 @@ handleClose = () => {
     this.setState(Object.assign(this.state, { [name]: value }));
   };
 
-  // token:string|null = this.props.SessionData.SessionData.token
   headers: any = {
     "Content-Type": "application/json",
     Authorization: this.props.sessionData.token,
   };
 
   fetchPlants = () => {
-    fetch(`http://localhost:4000/plant/all`, {
+    fetch(`${APIURL}/plant/all`, {
       method: "GET",
       headers: this.headers,
     })
@@ -101,12 +96,8 @@ handleClose = () => {
       });
   };
 
-  // useEffect(() => {
-  //   fetchMedia(localStorage.getItem("token"));
-  // }, []);
-
   handleSubmit = (locationId: number) => {
-    fetch(`http://localhost:4000/plant/${locationId}`, {
+    fetch(`${APIURL}/plant/${locationId}`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -123,46 +114,26 @@ handleClose = () => {
       .then((locationName) => {
         console.log(`plant added to ${locationName}`);
         this.handleClose();
-        window.location.reload()
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };
-  //   profileFetch = (values:Values) => {
-  //     fetch(`http://localhost:4000/plant/create`, {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         plantName: values.plantName,
-  //         plantType: values.plantType,
-  //         sunRequirement: values.sunRequirement,
-  //         waterNeeds: values.waterNeeds,
-  //         plantCare: values.plantCare,
-
-  //       }),
-  //       }).then(res => res.json())
-  //       .then((data) => {
-  //           console.log(data)
-  //       })
-
-  //       .catch((err) => console.log(err));
-  //   };
 
   render() {
     return (
       <div>
-
         <button color="secondary" onClick={this.handleClickOpen}>
           Add Plant
-
         </button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
-          >
+        >
           <DialogTitle id="form-dialog-title">update location</DialogTitle>
           <DialogContent>
-          <FormControl>
-            <TextField
+            <FormControl>
+              <TextField
                 label="Plant Name"
                 variant="outlined"
                 type="string"
@@ -170,7 +141,7 @@ handleClose = () => {
                 onChange={this.handleChange}
               />
               <br />
-            <TextField
+              <TextField
                 label="Type"
                 variant="outlined"
                 type="string"
@@ -178,7 +149,7 @@ handleClose = () => {
                 onChange={this.handleChange}
               />
               <br />
-               <TextField
+              <TextField
                 label="Sun Requirements"
                 variant="outlined"
                 type="string"
@@ -186,7 +157,7 @@ handleClose = () => {
                 onChange={this.handleChange}
               />
               <br />
-             <TextField
+              <TextField
                 label="Watering Frequency"
                 variant="outlined"
                 type="string"
@@ -194,7 +165,7 @@ handleClose = () => {
                 onChange={this.handleChange}
               />
               <br />
-               <TextField
+              <TextField
                 label="Notes"
                 variant="outlined"
                 type="string"
@@ -208,84 +179,19 @@ handleClose = () => {
             <button onClick={this.handleClose} color="secondary">
               Cancel
             </button>
-            <button 
-            value={this.props.location.locationId}
-            onClick= {(e) =>{
-              this.handleSubmit(this.props.location.locationId) 
-            }} color="primary">
+            <button
+              value={this.props.location.locationId}
+              onClick={(e) => {
+                this.handleSubmit(this.props.location.locationId);
+              }}
+              color="primary"
+            >
               add plant
             </button>
           </DialogActions>
-
-
-          </Dialog>
-        </div>
-
+        </Dialog>
+      </div>
     );
   }
 }
 export default PlantCreate;
-// render() {
-
-//   return (
-//       <div className="createTable">
-//       <h1> Add New Plant</h1>
-//       <FormControl>
-//         <TextField
-//           label="Plant Type"
-//           variant="outlined"
-//           type="text"
-//           onChange={(e) => {
-//             this.setState({ plantName: e.target.value });
-//           }}
-//         />
-//           <br />
-//         <TextField
-//           label="Plant Name"
-//           variant="outlined"
-//           type="text"
-//           onChange={(e) => {
-//             this.setState({ plantType: e.target.value });
-//           }}
-//         />
-//         <br />
-//            <TextField
-//           label="Sun Requirements"
-//           variant="outlined"
-//           type="text"
-//           onChange={(e) => {
-//             this.setState({ sunRequirement: e.target.value });
-//           }}
-//         />
-//           <br />
-//          <TextField
-//           label="Water Needs"
-//           variant="outlined"
-//           type="text"
-//           onChange={(e) => {
-//             this.setState({ waterNeeds: e.target.value });
-//           }}
-//         />
-//           <br />
-//         <TextField
-//           label="Plant Care"
-//           variant="outlined"
-//           type="text"
-//           onChange={(e) => {
-//             this.setState({ plantCare: e.target.value });
-//           }}
-//         />
-//         <Button
-//           variant="contained"
-//           onClick={(e) => {
-//             this.handleSubmit(e);
-//           }}
-//         >
-//           Add to your inventory
-//         </Button>
-//       </FormControl>
-//     </div>
-//   )
-// }
-// }
-// export default PlantCreate;
