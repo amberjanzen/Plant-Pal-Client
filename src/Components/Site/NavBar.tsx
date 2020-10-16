@@ -1,19 +1,17 @@
 import React, { Component, useState } from "react";
 import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
-import Home from "./Home";
-import Auth from "../../Auth/Auth";
-import UserTable from "../../Auth/userTable/UserTable";
-import PlantIndex from "../Plants/PlantIndex";
-import Resources from "./Resources";
+// import Home from "./Home";
+// import Auth from "../../Auth/Auth";
+// import UserTable from "../../Auth/userTable/UserTable";
+// import PlantIndex from "../Plants/PlantIndex";
+// import Resources from "./Resources";
 import "../../StyleCSS/header.css";
-
-// import styled from "styled-components";
 
 type navState = {};
 type NavProps = {
   updateToken: (token: string, authenticated: boolean) => void;
-  sessionData: { authenticated: boolean; token: string | null};
-  updateAdmin: (admin: boolean) => void,
+  sessionData: { authenticated: boolean; token: string | null };
+  updateAdmin: (admin: boolean) => void;
 };
 
 class NavBar extends Component<NavProps, navState> {
@@ -21,14 +19,7 @@ class NavBar extends Component<NavProps, navState> {
     super(props);
   }
 
-
-  
-
-
   render() {
-    // const [open, setOpen] = useState(false);
-
-
     return (
       <div className="navbar">
         <nav>
