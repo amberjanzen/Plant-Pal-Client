@@ -1,4 +1,4 @@
-Plant Pal is a web application that allow you to organize your house plant collection so that you can properly care for your plant babies. No longer will your plants suffer the fate of over watering or underwatering. This web app is a way to digitaly store and organize proper care instructions for your plant. 
+Plant Pal is a web application that allows you to organize your house plant collection so that you can properly care for your plant babies. No longer will your plants suffer the fate of over watering or underwatering. This web app is a way to digitaly store and organize proper care instructions for your plant. 
 
 the initial build of this web application was created for a final course requirement at Eleven Fifty Academy upon graduation of the Web Development BootCamp in October 2020.
 
